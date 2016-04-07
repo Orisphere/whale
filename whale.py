@@ -12,7 +12,8 @@ class Whale(pygame.sprite.Sprite):
 		self.speed = [1, 1]
 		self.facing_right = True
 		self.state = 'still'
-		
+		self.spouting = False
+
 		self.spout_0 = pygame.image.load('spout00.gif').convert()
 		self.spout_1 = pygame.image.load('spout0.gif').convert()
 		self.spout_2 = pygame.image.load('spout.gif').convert()
@@ -20,8 +21,6 @@ class Whale(pygame.sprite.Sprite):
 	def update(self):
 		if self.state == 'still':
 			pass
-		elif self.state == 'spout':
-			self.spout()
 		elif self.state == 'moveup':
 			self.moveup()
 		elif self.state == 'movedown':
@@ -30,7 +29,10 @@ class Whale(pygame.sprite.Sprite):
 			self.moveleft()
 		elif self.state == 'moveright':
 			self.moveright()
-
+		
+		if self.spouting:
+			self.spout()
+	
 	def movedown(self):
 		self.speed[0] = 0
 		
@@ -101,7 +103,7 @@ class Whale(pygame.sprite.Sprite):
 		elif self.spout_counter == 75:
 			self.image = pygame.transform.flip(self.whale, not self.facing_right, False)
 			self.spout_counter = 0
-			self.state = 'still'
+			self.spouting = False
 		else:
 			self.spout_counter += 1
 	

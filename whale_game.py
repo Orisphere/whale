@@ -41,7 +41,7 @@ def run_game():
 					whale.state = 'still'
 
 			elif event.type == MOUSEBUTTONDOWN:
-				whale.state = 'spout'
+				whale.spouting = True
 
 	
 		screen.fill(color)
