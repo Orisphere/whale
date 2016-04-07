@@ -8,7 +8,7 @@ class Whale(pygame.sprite.Sprite):
 		self.image = self.whale
 		self.rect = self.image.get_rect()
 		self.spout_counter = 0
-		self.rect.top, self.rect.left = 50, 50
+		self.rect.top, self.rect.right = 50, 700
 		self.speed = [1, 1]
 		self.direction = False
 
@@ -20,7 +20,10 @@ class Whale(pygame.sprite.Sprite):
 		if self.spout_counter == 0:
 			self.move()
 		else:
-			self.spout()
+			if self.direction:
+				self.spout_left()
+			else:
+				self.spout()
 
 	def move(self):
 		if self.rect.left < 0 or self.rect.right > 750:
@@ -59,7 +62,33 @@ class Whale(pygame.sprite.Sprite):
 		if self.spout_counter == 150:
 			self.image = self.whale
 			self.spout_counter = 0
-			self.speed = [1, 1] #probably not right		
+			self.speed = [1, 1] #probably not right
+			new_pos = self.rect.move(self.speed)
+			self.rect = new_pos
 		else:
 			self.spout_counter += 1
+	
+	def spout_left(self):
+
+		if self.spout_counter == 1:
+			self.image = pygame.transform.flip(self.spout_0, True, False)
+			self.speed = [0, 0]
+			self.spout_counter += 1
 		
+		if self.spout_counter == 50:
+			self.image = pygame.transform.flip(self.spout_1, True, False)
+			self.spout_counter += 1
+		
+		if self.spout_counter == 100:
+			self.image = pygame.transform.flip(self.spout_2, True, False)
+			self.spout_counter += 1
+		
+		if self.spout_counter == 150:
+			self.image = pygame.transform.flip(self.whale, True, False)
+			self.spout_counter = 0
+			self.speed = [-1, 1] #probably not right
+			new_pos = self.rect.move(self.speed)
+			self.rect = new_pos
+		else:
+			self.spout_counter += 1
+	
