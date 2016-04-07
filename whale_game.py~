@@ -31,7 +31,14 @@ def run_game():
 					whale.state = 'moveright'
 
 			elif event.type == KEYUP:
-				whale.state = 'still'
+				if (event.key == K_UP or event.key == K_w) and whale.state == 'moveup':
+					whale.state = 'still'
+				if (event.key == K_DOWN or event.key == K_s) and whale.state == 'movedown':
+					whale.state = 'still'
+				if (event.key == K_LEFT or event.key == K_a) and whale.state == 'moveleft':
+					whale.state = 'still'
+				if (event.key == K_RIGHT or event.key == K_d) and whale.state == 'moveright':
+					whale.state = 'still'
 
 			elif event.type == MOUSEBUTTONDOWN:
 				whale.state = 'spout'
