@@ -1,74 +1,65 @@
-import sys, pygame
+import pygame
 
+class Whale(pygame.sprite.Sprite):
 
-def run_game():
-	pygame.init()
-	
-	size = 750, 500
-	color = 210, 210, 210 
-	speed = [1, 1]
-	o_speed = [1, 1]
-	direction = False
-	screen = pygame.display.set_mode(size)
-	whale = pygame.image.load('whale.gif').convert()
-	whale_rect = whale.get_rect()
-	spout00 = pygame.image.load('spout00.gif').convert()
-	spout0 = pygame.image.load('spout0.gif').convert()
-	spout = pygame.image.load('spout.gif').convert()
-	octopus = pygame.image.load('octopus.gif').convert()
-	oct_rect = octopus.get_rect()
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.whale = pygame.image.load('whale.gif').convert()
+		self.image = self.whale
+		self.rect = self.image.get_rect()
+		self.spout_counter = 0
+		self.rect.top, self.rect.left = 50, 50
+		self.speed = [1, 1]
+		self.direction = False
 
-	while 1:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				sys.exit()
+		self.spout_0 = pygame.image.load('spout00.gif').convert()
+		self.spout_1 = pygame.image.load('spout0.gif').convert()
+		self.spout_2 = pygame.image.load('spout.gif').convert()
+
+	def update(self):
+		if self.spout_counter == 0:
+			self.move()
+		else:
+			self.spout()
+
+	def move(self):
+		if self.rect.left < 0 or self.rect.right > 750:
+			self.speed[0] = -self.speed[0]
+			self.image = pygame.transform.flip(self.image, True, False)
+			self.direction = not self.direction
+			new_pos = self.rect.move(self.speed)
+
+		if self.rect.bottom > 500:
+			self.speed[1] = -self.speed[1]
+			new_pos = self.rect.move(self.speed)
+
+		if self.rect.top < 0:
+			self.spout_counter += 1
+			new_pos = self.rect
+		else:
+			new_pos = self.rect.move(self.speed)
 		
-		whale_rect = whale_rect.move(speed)
+		self.rect = new_pos
+
+	def spout(self):
+
+		if self.spout_counter == 1:
+			self.image = self.spout_0
+			self.speed = [0, 0]
+			self.spout_counter += 1
 		
-		oct_rect = oct_rect.move(o_speed)	
+		if self.spout_counter == 50:
+			self.image = self.spout_1
+			self.spout_counter += 1
 		
-		if oct_rect.left < 0 or oct_rect.right > 750:
-			o_speed[0] = -o_speed[0]
+		if self.spout_counter == 100:
+			self.image = self.spout_2
+			self.spout_counter += 1
 		
-		if oct_rect.top < 0 or oct_rect.bottom > 500:
-			o_speed[1] = -o_speed[1]
-
-		if whale_rect.left < 0 or whale_rect.right > 750:
-			speed[0] = -speed[0]
-			whale = pygame.transform.flip(whale, True, False)
-			direction = not direction
-
-		if whale_rect.top < 0: 
-			speed[1] = -speed[1]
-				
-			screen.fill(color)
-			screen.blit(pygame.transform.flip(spout00, direction, False), whale_rect)
-			screen.blit(octopus, oct_rect)
-			pygame.display.update()
-			pygame.time.delay(50)
-
-			screen.fill(color)
-			screen.blit(pygame.transform.flip(spout0, direction, False), whale_rect)
-			screen.blit(octopus, oct_rect)
-			pygame.display.update()
-			pygame.time.delay(50)
-
-			screen.fill(color)
-			screen.blit(pygame.transform.flip(spout, direction, False), whale_rect)
-			screen.blit(octopus, oct_rect)
-			pygame.display.update()
-			pygame.time.delay(800)
-			
-			screen.fill(color)
-			screen.blit(whale, whale_rect)
-			screen.blit(octopus, oct_rect)
-
-		if whale_rect.bottom > 500:
-			speed[1] = -speed[1]
-
-		screen.fill(color)
-		screen.blit(whale, whale_rect)
-		screen.blit(octopus, oct_rect)
-		pygame.display.update()
-		pygame.time.delay(10)
-run_game()
+		if self.spout_counter == 150:
+			self.image = self.whale
+			self.spout_counter = 0
+			self.speed = [1, 1] #probably not right		
+		else:
+			self.spout_counter += 1
+		
