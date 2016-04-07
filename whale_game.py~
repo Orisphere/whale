@@ -2,44 +2,46 @@ import os, sys
 import pygame
 from pygame.locals import *
 from whale import Whale
-
-def load_image(filename):
-	image = pygame.image.load(filename).convert()
-	rect = image.get_rect()
-	return image, rect
+from octopus import Octopus
 	
 def run_game():
 	pygame.init()
 	
 	size = width, height = 750, 500
 	color = 210, 210, 210 
-	o_speed = [1, 1]
-	direction = False
 	screen = pygame.display.set_mode(size)
 	
 	whale = Whale()
-	octopus, oct_rect = load_image('octopus.gif')
-	sprites = pygame.sprite.RenderPlain((whale))
+	octopus = Octopus()
+	sprites = pygame.sprite.RenderPlain((whale, octopus))
 
 	while 1:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				sys.exit()
-		
-		
-		oct_rect = oct_rect.move(o_speed)	
-		
-		if oct_rect.left < 0 or oct_rect.right > 750:
-			o_speed[0] = -o_speed[0]
-		
-		if oct_rect.top < 0 or oct_rect.bottom > 500:
-			o_speed[1] = -o_speed[1]
+			
+			elif event.type == KEYDOWN:
+				if event.key == K_UP or event.key == K_w:
+					whale.state = 'moveup'
+				if event.key == K_DOWN or event.key == K_s:
+					whale.state = 'movedown'
+				if event.key == K_LEFT or event.key == K_a:
+					whale.state = 'moveleft'
+				if event.key == K_RIGHT or event.key == K_d:
+					whale.state = 'moveright'
+
+			elif event.type == KEYUP:
+				whale.state = 'still'
+
+			elif event.type == MOUSEBUTTONDOWN:
+				whale.state = 'spout'
 
 	
 		screen.fill(color)
 		sprites.update()
 		sprites.draw(screen)
-		screen.blit(octopus, oct_rect)
 		pygame.display.update()
 		pygame.time.delay(10)
-run_game()
+
+
+if __name__ == '__main__': run_game()
