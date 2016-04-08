@@ -9,7 +9,7 @@ class Whale(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.spout_counter = 0
 		self.rect.top, self.rect.right = 50, 700
-		self.speed = [1, 1]
+		#self.speed = [1, 1]
 		self.facing_right = True
 		self.state = 'still'
 		
@@ -32,57 +32,47 @@ class Whale(pygame.sprite.Sprite):
 			self.moveright()
 
 	def movedown(self):
-		self.speed[0] = 0
+		#self.speed[0] = 0
 		
-		if self.rect.bottom > 500:
-			self.speed[1] = 0
-		else:
-			self.speed[1] = 1
-		
-		new_pos = self.rect.move(self.speed)
-		self.rect = new_pos
+		#if self.rect.bottom > 500:
+			#self.speed[1] = 0
+		#else:
+			#self.speed[1] = 1
+		if self.rect.bottom + 50 > 500:
+			pass
+		else:		
+			new_pos = self.rect.move([0,50])
+			self.rect = new_pos
 
 	
 	def moveup(self):
-		self.speed[0] = 0
-		
-		if self.rect.top < 0:
-			self.speed[1] = 0
-		else:
-			self.speed[1] = -1
-		new_pos = self.rect.move(self.speed)
-		self.rect = new_pos
+		if self.rect.top - 50 <= 0:
+			pass
+		else:		
+			new_pos = self.rect.move([0,-50])
+			self.rect = new_pos
 
 	def moveright(self):
-		self.speed[1] = 0
-		
 		if not self.facing_right:
 			self.image = pygame.transform.flip(self.image, True, False)
 			self.facing_right = True
-		
-		if self.rect.right > 750: 
-			self.speed[0] = 0
-		else:
-			self.speed[0] = 1
-			
-		new_pos = self.rect.move(self.speed)
-		self.rect = new_pos
+
+		if self.rect.right + 50 > 750:
+			pass
+		else:		
+			new_pos = self.rect.move([50,0])
+			self.rect = new_pos
 	
 	def moveleft(self):
-		self.speed[1] = 0
-		
 		if self.facing_right:
 			self.image = pygame.transform.flip(self.image, True, False)
 			self.facing_right = False
-		
-		if self.rect.left < 0:
-			self.speed[0] = 0 
-			
-		else:
-			self.speed[0] = -1
 
-		new_pos = self.rect.move(self.speed)
-		self.rect = new_pos
+		if self.rect.left - 50 <= 0:
+			pass
+		else:		
+			new_pos = self.rect.move([-50,0])
+			self.rect = new_pos
 	
 	def spout(self):
 
