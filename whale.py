@@ -1,5 +1,7 @@
 import pygame
 
+import projectile
+
 class Whale(pygame.sprite.Sprite):
 
 	def __init__(self):
@@ -89,6 +91,7 @@ class Whale(pygame.sprite.Sprite):
 		elif self.spout_counter == 50:
 			self.image = pygame.transform.flip(self.spout_2, not self.facing_right, False) 
 			self.spout_counter += 1
+
 		
 		elif self.spout_counter == 75:
 			self.image = pygame.transform.flip(self.whale, not self.facing_right, False)

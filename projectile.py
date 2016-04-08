@@ -2,11 +2,16 @@ import pygame
 
 class Projectile(pygame.sprite.Sprite):
 
-	def __init__(self):
+	def __init__(self, is_facing_right, init_coord_x, init_coord_y):
 		pygame.sprite.Sprite.__init__(self)
 		self.image = pygame.image.load('whale.gif').convert()
 		self.rect = self.image.get_rect()
-		self.speed = [1, 1]
+		if is_facing_right:
+			self.speed = [10, 0]
+		else:
+			self.speed = [-10, 0]
+		self.start_coord_x = init_coord_x
+		self.start_coord_y = init_coord_y
 
 	def update(self):
 		self.move()
