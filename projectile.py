@@ -4,7 +4,7 @@ class Projectile(pygame.sprite.Sprite):
 
 	def __init__(self, is_facing_right, init_coord_x, init_coord_y):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load('whale.gif').convert()
+		self.image = pygame.image.load('projectile.gif').convert()
 		self.rect = self.image.get_rect()
 		self.rect.top = init_coord_y
 
