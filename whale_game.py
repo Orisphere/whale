@@ -51,6 +51,7 @@ def run_game():
 					launch_location = whale.rect.right
 				else:
 					launch_location = whale.rect.left
+
 				bullet = Sushi(whale.facing_right, launch_location, whale.rect.top+(whale.rect.height/2))
 				bullet_sprite = pygame.sprite.RenderPlain(bullet)
 				player_projectiles.add(bullet_sprite)
