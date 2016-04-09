@@ -47,6 +47,7 @@ def run_game():
 					launch_location = whale.rect.right
 				else:
 					launch_location = whale.rect.left
+				
 				bullet = Projectile(whale.facing_right, launch_location, whale.rect.top+(whale.rect.height/2))
 				bullet_sprite = pygame.sprite.RenderPlain(bullet)
 				sprites.add(bullet_sprite)
