@@ -17,32 +17,33 @@ class Octopus(Enemy):
 	def move(self):
 		if self.rect.top < 0 or self.rect.bottom > 500:
 			self.speed[1] = -self.speed[1]
-		
+			print(self.counter)	
 		if self.rect.right > 750 or self.rect.left < 0:
 			self.speed[0] = -self.speed[0]
+			print(self.counter)
 		
-		if self.counter > 450:
+		if self.counter > 412:
 			self.counter = 0
 		
-		elif self.counter == 50:
+		elif self.counter == 51:
 			self.speed[0] = self.speed[0]*2
 		
-		elif self.counter == 100:
+		elif self.counter == 103:
 			self.speed[1] = -self.speed[1]
 		
-		elif self.counter == 150:
-			self.speed[0] = self.speed[0]/2
+		elif self.counter == 157:
+			self.speed[0] = self.speed[0]/2 
 		
-		elif self.counter == 200:
+		elif self.counter == 204:
 			self.speed[1] = self.speed[1]*2
 		
-		elif self.counter == 250:
-			self.speed[0] = -self.speed[0]
+		elif self.counter == 247:
+			self.speed[0] = -self.speed[0]	
 		
-		elif self.counter == 300:
+		elif self.counter == 299:
 			self.speed[1] = self.speed[1]/2
-		
-		elif self.counter == 350:
+
+		elif self.counter == 351:
 			self.speed[0] = -self.speed[0]
 			self.speed[1] = -self.speed[1]
 		
