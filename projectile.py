@@ -1,6 +1,11 @@
 import pygame
 
+
 class Projectile(pygame.sprite.Sprite):
+	def __init__(self):
+		pass
+
+class Sushi(Projectile):
 
 	def __init__(self, is_facing_right, init_coord_x, init_coord_y):
 		pygame.sprite.Sprite.__init__(self)
