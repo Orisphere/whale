@@ -18,7 +18,7 @@ def run_game():
 	enemy_sprites = pygame.sprite.Group(octopus)
 	player_projectiles = pygame.sprite.Group()
 	enemy_projectiles = pygame.sprite.Group()
-	sprites = [player_sprite, enemy_sprites, player_projectiles, enemy_projectiles]
+	sprites = pygame.sprite.Group(player_sprite, enemy_sprites, player_projectiles, enemy_projectiles)
 
 	while 1:
 		for event in pygame.event.get():
@@ -54,18 +54,18 @@ def run_game():
 				bullet = Sushi(whale.facing_right, launch_location, whale.rect.top+(whale.rect.height/2))
 				bullet_sprite = pygame.sprite.RenderPlain(bullet)
 				player_projectiles.add(bullet_sprite)
+				sprites.add(bullet_sprite)
 				
 				# sprites.add(bullet_sprite)
 
 	
 		screen.fill(color)
-		for sprite_group in sprites:
-			sprite_group.update()
-			sprite_group.draw(screen)
+		sprites.update()
+		sprites.draw(screen)
 		player_projectile_list = player_projectiles.sprites()
 		for projectile in player_projectile_list:
 			for enemy in enemy_sprites.sprites():
-				if pygame.sprite.collide_rect(projectile, enemy):
+				if pygame.sprite.collide_rect(projectile, enemy): #kill any enemy and bullet sprites that collide
 					projectile.kill()
 					enemy.kill()
 
