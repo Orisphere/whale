@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 from whale import Whale
 from octopus import Octopus
+from projectile import Projectile
 	
 def run_game():
 	pygame.init()
@@ -42,6 +43,13 @@ def run_game():
 
 			elif event.type == MOUSEBUTTONDOWN:
 				whale.spouting = True
+				if whale.facing_right:
+					launch_location = whale.rect.right
+				else:
+					launch_location = whale.rect.left
+				bullet = Projectile(whale.facing_right, launch_location, whale.rect.top+(whale.rect.height/2))
+				bullet_sprite = pygame.sprite.RenderPlain(bullet)
+				sprites.add(bullet_sprite)
 
 	
 		screen.fill(color)
