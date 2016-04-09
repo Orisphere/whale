@@ -1,14 +1,14 @@
 import pygame
 
 
-class Projectile(pygame.sprite.Sprite):
+class Projectile(pygame.sprite.DirtySprite):
 	def __init__(self):
-		pass
+		pygame.sprite.DirtySprite.__init__(self)
 
 class Sushi(Projectile):
 
 	def __init__(self, is_facing_right, init_coord_x, init_coord_y):
-		pygame.sprite.Sprite.__init__(self)
+		Projectile.__init__(self)
 		self.image = pygame.image.load('projectile.gif').convert()
 		self.rect = self.image.get_rect()
 		self.rect.top = init_coord_y

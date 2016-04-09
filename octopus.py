@@ -17,10 +17,8 @@ class Octopus(Enemy):
 	def move(self):
 		if self.rect.top < 0 or self.rect.bottom > 500:
 			self.speed[1] = -self.speed[1]
-			print(self.counter)	
 		if self.rect.right > 750 or self.rect.left < 0:
 			self.speed[0] = -self.speed[0]
-			print(self.counter)
 		
 		if self.counter > 412:
 			self.counter = 0
