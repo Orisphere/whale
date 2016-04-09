@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 from whale import Whale
 from octopus import Octopus
-from projectile import Projectile
+from projectile import Sushi
 	
 def run_game():
 	pygame.init()
@@ -14,7 +14,11 @@ def run_game():
 	
 	whale = Whale()
 	octopus = Octopus()
-	sprites = pygame.sprite.RenderPlain((whale, octopus))
+	player_sprite = pygame.sprite.Group(whale)
+	enemy_sprites = pygame.sprite.Group(octopus)
+	player_projectiles = pygame.sprite.Group()
+	enemy_projectiles = pygame.sprite.Group()
+	sprites = [player_sprite, enemy_sprites, player_projectiles, enemy_projectiles]
 
 	while 1:
 		for event in pygame.event.get():
@@ -47,14 +51,24 @@ def run_game():
 					launch_location = whale.rect.right
 				else:
 					launch_location = whale.rect.left
-				bullet = Projectile(whale.facing_right, launch_location, whale.rect.top+(whale.rect.height/2))
+				bullet = Sushi(whale.facing_right, launch_location, whale.rect.top+(whale.rect.height/2))
 				bullet_sprite = pygame.sprite.RenderPlain(bullet)
-				sprites.add(bullet_sprite)
+				player_projectiles.add(bullet_sprite)
+				
+				# sprites.add(bullet_sprite)
 
 	
 		screen.fill(color)
-		sprites.update()
-		sprites.draw(screen)
+		for sprite_group in sprites:
+			sprite_group.update()
+			sprite_group.draw(screen)
+		player_projectile_list = player_projectiles.sprites()
+		for projectile in player_projectile_list:
+			for enemy in enemy_sprites.sprites():
+				if pygame.sprite.collide_rect(projectile, enemy):
+					projectile.kill()
+					enemy.kill()
+
 		pygame.display.update()
 		pygame.time.delay(10)
 
