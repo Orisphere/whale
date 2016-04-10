@@ -11,4 +11,4 @@ class Enemy(pygame.sprite.DirtySprite):
 
 	def move(self):
 		pass
-
+	
