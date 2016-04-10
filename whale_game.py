@@ -69,7 +69,7 @@ def run_game():
 			for enemy in enemy_sprites.sprites():
 				if pygame.sprite.collide_rect(projectile, enemy): #kill any enemy and bullet sprites that collide
 					projectile.kill()
-					enemy.health -= 1
+					enemy.health -= projectile.damage
 					if enemy.health <= 0:
 						enemy.kill()
 

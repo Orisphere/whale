@@ -4,6 +4,7 @@ import pygame
 class Projectile(pygame.sprite.DirtySprite):
 	def __init__(self):
 		pygame.sprite.DirtySprite.__init__(self)
+		self.damage = 10
 
 class Sushi(Projectile):
 
@@ -12,6 +13,7 @@ class Sushi(Projectile):
 		self.image = pygame.image.load('projectile.gif').convert()
 		self.rect = self.image.get_rect()
 		self.rect.top = init_coord_y
+		self.damage = 10
 
 		if is_facing_right:
 			self.speed = [10, 0]
