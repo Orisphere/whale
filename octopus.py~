@@ -9,6 +9,7 @@ class Octopus(Enemy):
 		self.rect = self.image.get_rect()
 		self.speed = [1, 1]
 		self.counter = 0
+		self.health = 10
 
 	def update(self):
 		self.counter += 1

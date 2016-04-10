@@ -64,11 +64,14 @@ def run_game():
 		sprites.update()
 		sprites.draw(screen)
 		player_projectile_list = player_projectiles.sprites()
+		
 		for projectile in player_projectile_list:
 			for enemy in enemy_sprites.sprites():
 				if pygame.sprite.collide_rect(projectile, enemy): #kill any enemy and bullet sprites that collide
 					projectile.kill()
-					enemy.kill()
+					enemy.health -= 1
+					if enemy.health <= 0:
+						enemy.kill()
 
 		pygame.display.update()
 		pygame.time.delay(10)
