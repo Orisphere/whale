@@ -13,7 +13,7 @@ class Whale(pygame.sprite.DirtySprite):
 		self.facing_right = True
 		self.state = 'still'
 		self.spouting = False
-		self.health = 5
+		self.health = 10
 
 		self.spout_0 = pygame.image.load('spout00.gif').convert()
 		self.spout_1 = pygame.image.load('spout0.gif').convert()

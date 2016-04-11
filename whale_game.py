@@ -4,7 +4,8 @@ from pygame.locals import *
 from whale import Whale
 from octopus import Octopus
 from projectile import Sushi
-	
+
+
 def run_game():
 	pygame.init()
 	
@@ -19,7 +20,7 @@ def run_game():
 	player_projectiles = pygame.sprite.Group()
 	enemy_projectiles = pygame.sprite.Group()
 	sprites = pygame.sprite.Group(player_sprite, enemy_sprites, player_projectiles, enemy_projectiles)
-
+	play = False
 	while 1:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
