@@ -5,10 +5,16 @@ from game_state import *
 
 def run_game():
 	
-	state = LevelOne() 
+	state = StartState() 
 	while 1:
 		for event in pygame.event.get():
-			state.handle_event(event)
+			if event.type == STATECHANGE:
+				if event.new_state == "StartState":
+					state = StartState()
+				elif event.new_state == "LevelOne":
+					state = LevelOne() 
+			else:
+				state.handle_event(event)
 		state.update()
 		pygame.time.delay(10)
 

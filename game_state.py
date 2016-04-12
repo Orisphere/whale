@@ -6,6 +6,10 @@ from pygame.locals import *
 import sys
 from whale import Whale
 
+
+#STATECHANGE is the first userevent of 9
+STATECHANGE = USEREVENT+0
+
 class GameState:
 	
 	def __init__(self):
@@ -37,7 +41,10 @@ class StartState(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN:
-			event.pos = 0
+			if self.button_rect.collidepoint(event.pos):
+				startgame_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="LevelOne")
+				pygame.event.post(startgame_event)
+
 
 class LevelOne(GameState):
 	
@@ -103,6 +110,9 @@ class LevelOne(GameState):
 					enemy.health -= projectile.damage
 					if enemy.health <= 0:
 						enemy.kill()
+		if not self.octopus.alive():
+			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state="StartState")
+			pygame.event.post(playerwon_event)
 
 
 		pygame.display.update()
