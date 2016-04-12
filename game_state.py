@@ -6,6 +6,10 @@ from pygame.locals import *
 import sys
 from whale import Whale
 
+
+#STATECHANGE is the first userevent of 9
+STATECHANGE = USEREVENT+0
+
 class GameState:
 	
 	def __init__(self):
@@ -36,9 +40,11 @@ class StartState(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN:
-			mouse_pos = pygame.mouse.get_pos() 
-			if self.button_rect.collidepoint(mouse_pos):
-				print(mouse_pos)
+			if self.button_rect.collidepoint(event.pos):
+				startgame_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="LevelOne")
+				pygame.event.post(startgame_event)
+
+
 
 class LevelOne(GameState):
 	
@@ -55,6 +61,28 @@ class LevelOne(GameState):
 		self.enemy_projectiles = pygame.sprite.Group()
 		
 		self.sprites = pygame.sprite.Group(self.player_sprite, self.enemy_sprites, self.player_projectiles, self.enemy_projectiles)
+	
+	def calc_dmg(self):
+		player_projectile_list = self.player_projectiles.sprites()
+
+		for projectile in player_projectile_list:
+			for enemy in self.enemy_sprites.sprites():
+				if pygame.sprite.collide_rect(projectile, enemy): #kill any enemy and bullet sprites that collide
+					projectile.kill()
+					enemy.health -= projectile.damage
+					if enemy.health <= 0:
+						enemy.kill()
+
+	def shoot(self):
+		self.whale.spouting = True
+		if self.whale.facing_right:
+			launch_location = self.whale.rect.right
+		else:
+			launch_location = self.whale.rect.left
+		bullet = Sardine(self.whale.facing_right, launch_location, self.whale.rect.top+(self.whale.rect.height/2))
+		bullet_sprite = pygame.sprite.Group(bullet)
+		self.player_projectiles.add(bullet_sprite)
+		self.sprites.add(bullet_sprite)
 	
 	def handle_event(self, event):
 			super().handle_event(event)
@@ -80,30 +108,18 @@ class LevelOne(GameState):
 					self.whale.state = 'still'
 
 			elif event.type == MOUSEBUTTONDOWN:
-				self.whale.spouting = True
-				if self.whale.facing_right:
-					launch_location = self.whale.rect.right
-				else:
-					launch_location = self.whale.rect.left
-				bullet = Sardine(self.whale.facing_right, launch_location, self.whale.rect.top+(self.whale.rect.height/2))
-				bullet_sprite = pygame.sprite.Group(bullet)
-				self.player_projectiles.add(bullet_sprite)
-				self.sprites.add(bullet_sprite)
-		
+				self.shoot()
+				
+			
 	def update(self):
 		
 		self.screen.fill(self.background)
 		self.sprites.update()
 		self.sprites.draw(self.screen)
-		player_projectile_list = self.player_projectiles.sprites()
+		self.calc_dmg()
 
-		for projectile in player_projectile_list:
-			for enemy in self.enemy_sprites.sprites():
-				if pygame.sprite.collide_rect(projectile, enemy): #kill any enemy and bullet sprites that collide
-					projectile.kill()
-					enemy.health -= projectile.damage
-					if enemy.health <= 0:
-						enemy.kill()
-
+		if not self.octopus.alive():
+			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state="StartState")
+			pygame.event.post(playerwon_event)
 
 		pygame.display.update()

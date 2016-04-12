@@ -5,11 +5,21 @@ from game_state import *
 
 def run_game():
 	
-	state = StartState() 
+<<<<<<< HEAD
+	state = LevelOne() 
 	
+=======
+	state = StartState() 
+>>>>>>> 934c46a0e7d5a16bcb6362a54a3d71010d090674
 	while 1:
 		for event in pygame.event.get():
-			state.handle_event(event)
+			if event.type == STATECHANGE:
+				if event.new_state == "StartState":
+					state = StartState()
+				elif event.new_state == "LevelOne":
+					state = LevelOne() 
+			else:
+				state.handle_event(event)
 		state.update()
 		pygame.time.delay(10)
 
