@@ -62,15 +62,15 @@ class LevelOne(GameState):
 		self.sprites = pygame.sprite.Group(self.whale, self.enemy_sprites, self.player_projectiles, self.enemy_projectiles)
 	
 	def calc_dmg(self):
-		player_projectile_list = self.player_projectiles.sprites()
-
-		for projectile in player_projectile_list:
-			for enemy in self.enemy_sprites.sprites():
-				if pygame.sprite.collide_rect(projectile, enemy): #kill any enemy and bullet sprites that collide
-					projectile.kill()
-					enemy.health -= projectile.damage
-					if enemy.health <= 0:
-						enemy.kill()
+		player_projectiles = self.player_projectiles
+		enemies = self.enemy_sprites
+		enemy_hit = pygame.sprite.groupcollide(enemies, player_projectiles, False, True) 
+		
+		for enemy in enemy_hit.keys():
+			for projectile in enemy_hit[enemy]:
+				enemy.health -= projectile.damage
+				if enemy.health <= 0:
+					enemy.kill()
 
 		whale_collide = pygame.sprite.spritecollideany(self.whale, self.enemy_sprites, False)	
 		
