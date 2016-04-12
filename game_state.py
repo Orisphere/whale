@@ -9,7 +9,6 @@ from whale import Whale
 class GameState:
 	
 	def __init__(self):
-		print("INIT SUPER")
 		pygame.init()
 		self.size = self.width, self.height = 750, 500
 		self.screen = pygame.display.set_mode(self.size)
@@ -37,13 +36,15 @@ class StartState(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN:
-			event.pos = 0
+			mouse_pos = pygame.mouse.get_pos() 
+			if self.button_rect.collidepoint(mouse_pos):
+				print(mouse_pos)
 
 class LevelOne(GameState):
 	
 	def __init__(self):
 		super().__init__()
-		self.color = 210, 210, 210 
+		self.background = 210, 210, 210 
 		self.whale = Whale()
 		self.octopus = Octopus()
 		
@@ -91,7 +92,7 @@ class LevelOne(GameState):
 		
 	def update(self):
 		
-		self.screen.fill(self.color)
+		self.screen.fill(self.background)
 		self.sprites.update()
 		self.sprites.draw(self.screen)
 		player_projectile_list = self.player_projectiles.sprites()

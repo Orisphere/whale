@@ -1,5 +1,6 @@
 from enemy import Enemy
 import pygame
+import random
 
 class Octopus(Enemy):
 
@@ -24,27 +25,14 @@ class Octopus(Enemy):
 		if self.counter > 412:
 			self.counter = 0
 		
-		elif self.counter == 51:
-			self.speed[0] = self.speed[0]*2
+		elif self.counter%91 == 0:
+			seq = [0, 1, 1, 2]
+			random.shuffle(seq)
+			self.speed[0] = seq.pop()
+			self.speed[1] = seq.pop()
 		
-		elif self.counter == 103:
-			self.speed[1] = -self.speed[1]
 		
-		elif self.counter == 157:
-			self.speed[0] = self.speed[0]/2 
-		
-		elif self.counter == 204:
-			self.speed[1] = self.speed[1]*2
-		
-		elif self.counter == 247:
-			self.speed[0] = -self.speed[0]	
-		
-		elif self.counter == 299:
-			self.speed[1] = self.speed[1]/2
 
-		elif self.counter == 351:
-			self.speed[0] = -self.speed[0]
-			self.speed[1] = -self.speed[1]
 		
 		
 		new_pos = self.rect.move(self.speed)
