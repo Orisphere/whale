@@ -13,7 +13,6 @@ STATECHANGE = USEREVENT+0
 class GameState:
 	
 	def __init__(self):
-		print("INIT SUPER")
 		pygame.init()
 		self.size = self.width, self.height = 750, 500
 		self.screen = pygame.display.set_mode(self.size)
@@ -46,11 +45,12 @@ class StartState(GameState):
 				pygame.event.post(startgame_event)
 
 
+
 class LevelOne(GameState):
 	
 	def __init__(self):
 		super().__init__()
-		self.color = 210, 210, 210 
+		self.background = 210, 210, 210 
 		self.whale = Whale()
 		self.octopus = Octopus()
 		
@@ -98,7 +98,7 @@ class LevelOne(GameState):
 		
 	def update(self):
 		
-		self.screen.fill(self.color)
+		self.screen.fill(self.background)
 		self.sprites.update()
 		self.sprites.draw(self.screen)
 		player_projectile_list = self.player_projectiles.sprites()
