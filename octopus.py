@@ -19,14 +19,15 @@ class Octopus(Enemy):
 	def move(self):
 		if self.rect.top < 0 or self.rect.bottom > 500:
 			self.speed[1] = -self.speed[1]
+			counter = 0
 		if self.rect.right > 750 or self.rect.left < 0:
 			self.speed[0] = -self.speed[0]
-		
+			counter = 0		
 		if self.counter > 412:
 			self.counter = 0
 		
 		elif self.counter%91 == 0:
-			seq = [0, 1, 1, 2]
+			seq = [0, 1, 1, 2, -1, -1, -2]
 			random.shuffle(seq)
 			self.speed[0] = seq.pop()
 			self.speed[1] = seq.pop()

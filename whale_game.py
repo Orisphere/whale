@@ -5,7 +5,7 @@ from game_state import *
 
 def run_game():
 	
-	state = StartState() 
+	state = LevelOne() 
 	
 	while 1:
 		for event in pygame.event.get():

@@ -1,6 +1,6 @@
 from octopus import Octopus
 import os
-from projectile import Sushi
+from projectile import Sushi, Sardine, Dory
 import pygame
 from pygame.locals import *
 import sys
@@ -36,9 +36,9 @@ class StartState(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN:
-			mouse_pos = event.get_pos()
+			mouse_pos = pygame.mouse.get_pos() 
 			if self.button_rect.collidepoint(mouse_pos):
-				pass
+				print(mouse_pos)
 
 class LevelOne(GameState):
 	
@@ -85,7 +85,7 @@ class LevelOne(GameState):
 					launch_location = self.whale.rect.right
 				else:
 					launch_location = self.whale.rect.left
-				bullet = Sushi(self.whale.facing_right, launch_location, self.whale.rect.top+(self.whale.rect.height/2))
+				bullet = Sardine(self.whale.facing_right, launch_location, self.whale.rect.top+(self.whale.rect.height/2))
 				bullet_sprite = pygame.sprite.Group(bullet)
 				self.player_projectiles.add(bullet_sprite)
 				self.sprites.add(bullet_sprite)
