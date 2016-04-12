@@ -1,6 +1,6 @@
 from octopus import Octopus
 import os
-from projectile import Sushi, Sardine
+from projectile import Sushi, Sardine, Dory
 import pygame
 from pygame.locals import *
 import sys
