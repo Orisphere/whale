@@ -54,13 +54,12 @@ class LevelOne(GameState):
 		self.whale = Whale()
 		self.octopus = Octopus()
 		
-		self.player_sprite = pygame.sprite.Group(self.whale)
 		self.enemy_sprites = pygame.sprite.Group(self.octopus)
 		
 		self.player_projectiles = pygame.sprite.Group()
 		self.enemy_projectiles = pygame.sprite.Group()
 		
-		self.sprites = pygame.sprite.Group(self.player_sprite, self.enemy_sprites, self.player_projectiles, self.enemy_projectiles)
+		self.sprites = pygame.sprite.Group(self.whale, self.enemy_sprites, self.player_projectiles, self.enemy_projectiles)
 	
 	def calc_dmg(self):
 		player_projectile_list = self.player_projectiles.sprites()
@@ -73,6 +72,15 @@ class LevelOne(GameState):
 					if enemy.health <= 0:
 						enemy.kill()
 
+		whale_collide = pygame.sprite.spritecollideany(self.whale, self.enemy_sprites, False)	
+		
+		if whale_collide:
+			if not self.whale.invincible:
+				self.whale.invincible = 50
+				self.whale.health -= 1
+				print("hit")
+			if self.whale.health <= 0:
+				self.whale.kill()
 	def shoot(self):
 		self.whale.spouting = True
 		if self.whale.facing_right:
@@ -116,9 +124,10 @@ class LevelOne(GameState):
 		self.screen.fill(self.background)
 		self.sprites.update()
 		self.sprites.draw(self.screen)
+		self.calc_dmg()
+
 		if not self.octopus.alive():
 			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state="StartState")
 			pygame.event.post(playerwon_event)
-
 
 		pygame.display.update()

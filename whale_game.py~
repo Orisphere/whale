@@ -5,12 +5,9 @@ from game_state import *
 
 def run_game():
 	
-<<<<<<< HEAD
-	state = LevelOne() 
 	
-=======
 	state = StartState() 
->>>>>>> 934c46a0e7d5a16bcb6362a54a3d71010d090674
+	
 	while 1:
 		for event in pygame.event.get():
 			if event.type == STATECHANGE:
