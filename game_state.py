@@ -78,8 +78,9 @@ class LevelOne(GameState):
 			if not self.whale.invincible:
 				self.whale.invincible = 50
 				self.whale.health -= 1
-			if self.whale.health <= 0:
+			if not self.whale.alive(): 
 				self.whale.kill()
+
 	def shoot(self):
 		self.whale.spouting = True
 		if self.whale.facing_right:
