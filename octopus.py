@@ -8,7 +8,7 @@ class Octopus(Enemy):
 		Enemy.__init__(self)
 		self.image = pygame.image.load('octopus.gif').convert()
 		self.rect = self.image.get_rect()
-		self.speed = [2, 1]
+		self.speed = [2, 1] 
 		self.counter = 0
 		self.health = 100
 		self.reverse = 1

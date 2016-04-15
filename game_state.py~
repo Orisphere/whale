@@ -16,6 +16,7 @@ class GameState:
 		pygame.init()
 		self.size = self.width, self.height = 750, 500
 		self.screen = pygame.display.set_mode(self.size)
+		self.doors = []
 
 	def handle_event(self, event):
 		if event.type == QUIT:
@@ -78,7 +79,7 @@ class LevelOne(GameState):
 			if not self.whale.invincible:
 				self.whale.invincible = 50
 				self.whale.health -= 1
-			if not self.whale.alive(): 
+			if self.whale.health <= 0:
 				self.whale.kill()
 
 	def shoot(self):

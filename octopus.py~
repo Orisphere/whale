@@ -8,7 +8,7 @@ class Octopus(Enemy):
 		Enemy.__init__(self)
 		self.image = pygame.image.load('octopus.gif').convert()
 		self.rect = self.image.get_rect()
-		self.speed = [2, 1]
+		self.speed = [2, 1] 
 		self.counter = 0
 		self.health = 100
 		self.reverse = 1
@@ -53,7 +53,7 @@ class Octopus(Enemy):
 	#bounce		
 		elif self.counter == 785: 
 			self.speed[0] = 2*mod
-			self.speed[1] = 1 #Maybe error
+			self.speed[1] = -1 #Maybe error
 
 		elif self.counter == 835 or self.counter == 935:
 			self.speed[1] = 1 #y-axis speed
@@ -63,10 +63,10 @@ class Octopus(Enemy):
 	#drop		
 		elif self.counter == 1060:
 			self.speed[0] = 0
-			self.speed[1] = 2
+			self.speed[1] = 1
 	#rise	
 		elif self.counter == 1100:
-			self.speed[1] = -2
+			self.speed[1] = -1
 	#reverse	
 		elif self.counter == 1285:
 			self.speed[0] = -2*mod
