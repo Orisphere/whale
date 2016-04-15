@@ -17,13 +17,15 @@ class GameState:
 		self.size = self.width, self.height = 750, 500
 		self.screen = pygame.display.set_mode(self.size)
 		self.doors = []
+		self.cleared = False
 
 	def handle_event(self, event):
 		if event.type == QUIT:
 			sys.exit()
 
-	def update(self):
+	def is_cleared(self):
 		pass
+
 
 class StartState(GameState): 
 	
@@ -119,15 +121,20 @@ class LevelOne(GameState):
 			elif event.type == MOUSEBUTTONDOWN:
 				self.shoot()
 				
-			
+	def is_cleared(self):
+		
+		if self.enemy_sprites.sprites() == []:
+			self.cleared = True
+
 	def update(self):
 		
 		self.screen.fill(self.background)
 		self.sprites.update()
 		self.sprites.draw(self.screen)
 		self.calc_dmg()
+		self.is_cleared()
 
-		if not self.octopus.alive():
+		if self.cleared: 
 			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state="StartState")
 			pygame.event.post(playerwon_event)
 

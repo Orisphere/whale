@@ -3,7 +3,7 @@ import pygame
 class Whale(pygame.sprite.DirtySprite):
 
 	def __init__(self):
-		pygame.sprite.DirtySprite.__init__(self)
+		super.__init__(self)
 		self.whale = pygame.image.load('whale.gif').convert()
 		self.image = self.whale
 		self.rect = self.image.get_rect()
@@ -14,7 +14,7 @@ class Whale(pygame.sprite.DirtySprite):
 		self.state = 'still'
 		self.spouting = False
 		self.health = 10
-		self.vulnerable = 50
+		self.invincible = 0
 
 		self.spout_0 = pygame.image.load('spout00.gif').convert()
 		self.spout_1 = pygame.image.load('spout0.gif').convert()
@@ -35,8 +35,8 @@ class Whale(pygame.sprite.DirtySprite):
 		if self.spouting:
 			self.spout()
 
-		if self.vulnerable > 0:
-			self.vulnerable -= 1
+		if self.invincible > 0:
+			self.invincible -= 1
 	
 	def movedown(self):
 		self.speed[0] = 0
