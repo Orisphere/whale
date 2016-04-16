@@ -63,10 +63,10 @@ class Octopus(Enemy):
 	#drop		
 		elif self.counter == 1060:
 			self.speed[0] = 0
-			self.speed[1] = 1
+			self.speed[1] = 2
 	#rise	
 		elif self.counter == 1100:
-			self.speed[1] = -1
+			self.speed[1] = -2
 	#reverse	
 		elif self.counter == 1285:
 			self.speed[0] = -2*mod
