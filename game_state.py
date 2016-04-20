@@ -53,17 +53,25 @@ class LevelOne(GameState):
 	
 	def __init__(self):
 		super().__init__()
+		
 		self.background = 210, 210, 210 
+		self.heart = pygame.image.load('heart.gif').convert()
+		self.halfheart = pygame.image.load('halfheart.gif').convert()
+		self.healthbar = pygame.sprite.Group()
+
 		self.whale = Whale()
 		self.octopus = Octopus()
 		self.jelly = Jelly()	
+		
 		self.enemy_sprites = pygame.sprite.Group([self.octopus, self.jelly])
 		
 		self.player_projectiles = pygame.sprite.Group()
 		self.enemy_projectiles = pygame.sprite.Group()
 		
-		self.sprites = pygame.sprite.Group(self.whale, self.enemy_sprites, self.player_projectiles, self.enemy_projectiles)
-	
+		self.sprites = pygame.sprite.Group(self.whale, self.enemy_sprites, 
+						   self.player_projectiles, self.enemy_projectiles, self.healthbar)
+		self.update_healthbar()
+
 	def calc_dmg(self):
 		player_projectiles = self.player_projectiles
 		enemies = self.enemy_sprites
@@ -83,6 +91,14 @@ class LevelOne(GameState):
 				self.whale.health -= 1
 			if self.whale.health <= 0:
 				self.whale.kill()
+
+	def update_healthbar(self):
+		pos = [0, 0]
+		for i in range(int(self.whale.health/2)):
+			self.screen.blit(self.heart.copy(), pos)
+			pos[0] += 30
+		if self.whale.health%2 == 1:
+			self.screen.blit(self.halfheart, pos)
 
 	def shoot(self):
 		self.whale.spouting = True
@@ -132,6 +148,7 @@ class LevelOne(GameState):
 		self.sprites.update()
 		self.sprites.draw(self.screen)
 		self.calc_dmg()
+		self.update_healthbar()
 		self.is_cleared()
 
 		if self.cleared: 

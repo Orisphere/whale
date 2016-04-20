@@ -15,7 +15,6 @@ class Whale(pygame.sprite.DirtySprite):
 		self.spouting = False
 		self.health = 10
 		self.invincible = 0
-
 		self.spout_0 = pygame.image.load('spout00.gif').convert()
 		self.spout_1 = pygame.image.load('spout0.gif').convert()
 		self.spout_2 = pygame.image.load('spout.gif').convert()

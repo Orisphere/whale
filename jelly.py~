@@ -3,7 +3,7 @@ from enemy import Enemy
 import pygame
 import random
 
-class Octopus(Enemy):
+class Jelly(Enemy):
 
 	def __init__(self):
 		Enemy.__init__(self)
