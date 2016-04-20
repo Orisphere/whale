@@ -96,7 +96,7 @@ class LevelOne(GameState):
 		pos = [0, 0]
 		for i in range(int(self.whale.health/2)):
 			self.screen.blit(self.heart.copy(), pos)
-			pos[0] += 50
+		pos[0] += 50
 		if self.whale.health%2 == 1:
 			self.screen.blit(self.halfheart, pos)
 
