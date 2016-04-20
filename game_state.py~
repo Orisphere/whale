@@ -5,7 +5,7 @@ import pygame
 from pygame.locals import *
 import sys
 from whale import Whale
-
+from jelly import Jelly
 
 #STATECHANGE is the first userevent of 9
 STATECHANGE = USEREVENT+0

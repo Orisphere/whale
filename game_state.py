@@ -5,7 +5,7 @@ import pygame
 from pygame.locals import *
 import sys
 from whale import Whale
-
+from jelly import Jelly
 
 #STATECHANGE is the first userevent of 9
 STATECHANGE = USEREVENT+0
@@ -56,8 +56,8 @@ class LevelOne(GameState):
 		self.background = 210, 210, 210 
 		self.whale = Whale()
 		self.octopus = Octopus()
-		
-		self.enemy_sprites = pygame.sprite.Group(self.octopus)
+		self.jelly = Jelly()	
+		self.enemy_sprites = pygame.sprite.Group([self.octopus, self.jelly])
 		
 		self.player_projectiles = pygame.sprite.Group()
 		self.enemy_projectiles = pygame.sprite.Group()
