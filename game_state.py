@@ -107,7 +107,7 @@ class LevelOne(GameState):
 			launch_location = self.whale.rect.right
 		else:
 			launch_location = self.whale.rect.left
-		bullet = Sardine(self.whale.facing_right, launch_location, self.whale.rect.top+(self.whale.rect.height/2))
+		bullet = self.whale.projectile_type.fire(self.whale.facing_right, launch_location, (self.whale.rect.top+(self.whale.rect.height/2)))
 		bullet_sprite = pygame.sprite.Group(bullet)
 		self.player_projectiles.add(bullet_sprite)
 		self.sprites.add(bullet_sprite)

@@ -1,31 +1,31 @@
 import pygame
 
-
-class Projectile(pygame.sprite.DirtySprite):
+# formerly child of pygame.sprite.DirtySprite
+class Projectile():
 	def __init__(self):
-		pygame.sprite.DirtySprite.__init__(self)
+		#pygame.sprite.DirtySprite.__init__(self)
 		self.damage = 10
-
-
-
-class Sardine(Projectile):
-
-	def __init__(self, is_facing_right, init_coord_x, init_coord_y):
-		Projectile.__init__(self)
+		self.speed = 10
 		self.image = pygame.image.load('sardine.gif').convert()
-		self.rect = self.image.get_rect()
-		self.rect.top = init_coord_y
-		self.damage = 10
 
+	def fire(self, is_facing_right, init_coord_x, init_coord_y):
+		sprite = ProjectileSprite()
+		sprite.image = self.image #pygame.image.load('sardine.gif').convert()
+		sprite.rect = sprite.image.get_rect()
+		sprite.rect.top = init_coord_y
+		sprite.damage = self.damage
 		if is_facing_right:
-			self.speed = [10, 0]
-			self.rect.right = init_coord_x
+			sprite.speed = [self.speed, 0]
+			sprite.rect.right = init_coord_x
 		else:
-			self.image = pygame.transform.flip(self.image, True, False)
-			self.speed = [-10, 0]
-			self.rect.left = init_coord_x
-		# self.start_coord_x = init_coord_x
-		# self.start_coord_y = init_coord_y
+			sprite.image = pygame.transform.flip(sprite.image, True, False)
+			sprite.speed = [-self.speed, 0]
+			sprite.rect.left = init_coord_x
+		return sprite
+
+class ProjectileSprite(pygame.sprite.DirtySprite):
+	def __init__(self):
+		super().__init__()
 
 
 	def update(self):
@@ -42,77 +42,34 @@ class Sardine(Projectile):
 		else:
 			new_pos = self.rect.move(self.speed)
 			self.rect = new_pos
+
+#, is_facing_right, init_coord_x, init_coord_y
+class Sardine(Projectile):
+
+	def __init__(self):
+		super().__init__()
+		self.image = pygame.image.load('sardine.gif').convert()
+		self.damage = 10
+		self.speed = 10
+
 
 #level 1 upgraded projectile
 #Twice as fast as Sardines
 class Sushi(Projectile):
 
-	def __init__(self, is_facing_right, init_coord_x, init_coord_y):
-		Projectile.__init__(self)
+	def __init__(self):
+		super().__init__()
 		self.image = pygame.image.load('sushi.gif').convert()
-		self.rect = self.image.get_rect()
-		self.rect.top = init_coord_y
 		self.damage = 15
-
-		if is_facing_right:
-			self.speed = [20, 0]
-			self.rect.right = init_coord_x
-		else:
-			self.speed = [-20, 0]
-			self.rect.left = init_coord_x
-		# self.start_coord_x = init_coord_x
-		# self.start_coord_y = init_coord_y
-
-
-	def update(self):
-		self.move()
-
-	def move(self):
-		if self.rect.top < 0 or self.rect.bottom > 500:
-			self.kill()
-			#self.speed[1] = -self.speed[1]
-		
-		if self.rect.right > 750 or self.rect.left < 0:
-			self.kill()
-			#self.speed[0] = -self.speed[0]
-		else:
-			new_pos = self.rect.move(self.speed)
-			self.rect = new_pos
+		self.speed = 20
 
 
 
 
 class Dory(Projectile):
 
-	def __init__(self, is_facing_right, init_coord_x, init_coord_y):
-		Projectile.__init__(self)
+	def __init__(self):
+		super().__init__()
 		self.image = pygame.image.load('dory.gif').convert()
-		self.rect = self.image.get_rect()
-		self.rect.top = init_coord_y
 		self.damage = 50
-
-		if is_facing_right:
-			self.speed = [5, 0]
-			self.rect.right = init_coord_x
-		else:
-			self.image = pygame.transform.flip(self.image, True, False)
-			self.speed = [-5, 0]
-			self.rect.left = init_coord_x
-		# self.start_coord_x = init_coord_x
-		# self.start_coord_y = init_coord_y
-
-
-	def update(self):
-		self.move()
-
-	def move(self):
-		if self.rect.top < 0 or self.rect.bottom > 500:
-			self.kill()
-			#self.speed[1] = -self.speed[1]
-		
-		if self.rect.right > 750 or self.rect.left < 0:
-			self.kill()
-			#self.speed[0] = -self.speed[0]
-		else:
-			new_pos = self.rect.move(self.speed)
-			self.rect = new_pos
+		self.speed = 5
