@@ -14,7 +14,9 @@ def run_game():
 				if event.new_state == "StartState":
 					state = StartState()
 				elif event.new_state == "LevelOne":
-					state = LevelOne() 
+					state = LevelOne()
+				elif event.new_state == "Room_2":
+					state = Room_2()
 			else:
 				state.handle_event(event)
 		state.update()
