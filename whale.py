@@ -19,7 +19,7 @@ class Whale(pygame.sprite.DirtySprite):
 		self.spout_0 = pygame.image.load('spout00.gif').convert()
 		self.spout_1 = pygame.image.load('spout0.gif').convert()
 		self.spout_2 = pygame.image.load('spout.gif').convert()
-		self.projectile_type = Dory()
+		self.projectile = Sardine()
 
 	def update(self):
 		if self.state == 'still':
