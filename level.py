@@ -14,7 +14,7 @@ class Level(Object):
 		for __ in range(size):
 			room = GameState() #Should be a specific room
 			room.doors.append(random.random(direction)) #TODO: collision check on rooms
-	
+
 	def make_map(self):
 		pass
 
