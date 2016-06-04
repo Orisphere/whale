@@ -1,4 +1,4 @@
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 from octopus import Octopus
 import os
 from projectile import Sushi, Sardine, Dory
