@@ -8,6 +8,7 @@ import sys
 from whale import Whale
 from jelly import Jelly
 from hermit import Hermit
+from crab import Crab
 
 #STATECHANGE is the first userevent of 9
 STATECHANGE = USEREVENT+0
@@ -191,7 +192,7 @@ class Room_3(Room):
 		self.next_state = "Win"	
 	
 	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Octopus()])
+		self.enemy_sprites = pygame.sprite.Group([Crab()])
 
 class Win(GameState): 
 	
@@ -202,7 +203,8 @@ class Win(GameState):
 
 	def update(self):
 		self.screen.blit(self.win_screen, (0,0))
-		self.invincible += 1
+		if self.invincible <= 100:
+			self.invincible += 1
 		pygame.display.update()
 
 
@@ -220,7 +222,8 @@ class Lose(GameState):
 		self.invincible = 0	
 	def update(self):
 		self.screen.blit(self.lose_screen, (0,0))
-		self.invincible += 1
+		if self.invincible <= 100:
+			self.invincible += 1
 		pygame.display.update()
 
 	def handle_event(self, event):

@@ -192,7 +192,7 @@ class Room_3(Room):
 		self.next_state = "Win"	
 	
 	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Crab()])
+		self.enemy_sprites = pygame.sprite.Group([Crab(), Crab(), Crab()])
 
 class Win(GameState): 
 	
@@ -203,7 +203,8 @@ class Win(GameState):
 
 	def update(self):
 		self.screen.blit(self.win_screen, (0,0))
-		self.invincible += 1
+		if self.invincible <= 100:
+			self.invincible += 1
 		pygame.display.update()
 
 
@@ -221,7 +222,8 @@ class Lose(GameState):
 		self.invincible = 0	
 	def update(self):
 		self.screen.blit(self.lose_screen, (0,0))
-		self.invincible += 1
+		if self.invincible <= 100:
+			self.invincible += 1
 		pygame.display.update()
 
 	def handle_event(self, event):
