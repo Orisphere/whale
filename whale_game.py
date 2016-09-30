@@ -16,9 +16,11 @@ def run_game():
 				elif event.new_state == "Room_1":
 					state = Room_1()
 				elif event.new_state == "Room_2":
-					state = Room_2()
+					whale = state.whale
+					state = Room_2(whale)
 				elif event.new_state == "Room_3":
-					state = Room_3()
+					whale = state.whale
+					state = Room_3(whale)
 				elif event.new_state == "Win":
 					state = Win()
 				elif event.new_state == "Lose":

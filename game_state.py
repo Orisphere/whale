@@ -51,14 +51,14 @@ class StartState(GameState):
 class Room(GameState):	
 	__metaclass__ = ABCMeta
 
-	def __init__(self):
+	def __init__(self, whale):
 		super().__init__()
 		self.background = 210, 210, 210 
 		self.heart = pygame.image.load('heart.gif').convert()
 		self.halfheart = pygame.image.load('halfheart.gif').convert()
 		self.healthbar = pygame.sprite.Group()
 
-		self.whale = Whale()
+		self.whale = whale
 		self.set_enemies()
 		self.whale_is_dead = False
 		
@@ -170,27 +170,25 @@ class Room(GameState):
 class Room_1(Room):
 	
 	def __init__(self):
-		super().__init__()
+		super().__init__(Whale())
 		self.next_state = "Room_2"	
-	
 	def set_enemies(self):
 		self.enemy_sprites = pygame.sprite.Group([Octopus(), Jelly()])
 
 class Room_2(Room):	
-	def __init__(self):
-		super().__init__()
+	def __init__(self, whale):
+		super().__init__(whale)
 		self.next_state = "Room_3"
-
 	def set_enemies(self):	
 		self.enemy_sprites = pygame.sprite.Group([Hermit(), Hermit(), Hermit(), Hermit(), Hermit()])
 
 
 class Room_3(Room):
 	
-	def __init__(self):
-		super().__init__()
+	def __init__(self, whale):
+		super().__init__(whale)
 		self.next_state = "Win"	
-	
+		super().whale = whale
 	def set_enemies(self):
 		self.enemy_sprites = pygame.sprite.Group([Crab(), Crab(), Crab()])
 
