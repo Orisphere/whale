@@ -17,6 +17,10 @@ def run_game():
 					state = LevelOne()
 				elif event.new_state == "Room_2":
 					state = Room_2()
+				elif event.new_state == "Win":
+					state = Win()
+				elif event.new_state == "Lose":
+					state = Lose()
 			else:
 				state.handle_event(event)
 		state.update()

@@ -52,14 +52,14 @@ class Room(GameState):
 
 	def __init__(self):
 		super().__init__()
-		
 		self.background = 210, 210, 210 
 		self.heart = pygame.image.load('heart.gif').convert()
 		self.halfheart = pygame.image.load('halfheart.gif').convert()
 		self.healthbar = pygame.sprite.Group()
 
 		self.whale = Whale()
-		self.set_enemies() 
+		self.set_enemies()
+		self.whale_is_dead = False
 		
 		self.player_projectiles = pygame.sprite.Group()
 		self.enemy_projectiles = pygame.sprite.Group()
@@ -92,6 +92,7 @@ class Room(GameState):
 				self.whale.health -= 1
 			if self.whale.health <= 0:
 				self.whale.kill()
+				self.whale_is_dead = True
 
 	def update_healthbar(self):
 		pos = [0, 0]
@@ -155,7 +156,12 @@ class Room(GameState):
 		if self.cleared: 
 			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state=self.next_state)
 			pygame.event.post(playerwon_event)
-
+		
+	
+		if self.whale_is_dead: 
+			playerlose_event = pygame.event.Event(STATECHANGE, event_id="lose", new_state="Lose")
+			pygame.event.post(playerlose_event)
+		
 		pygame.display.update()
 
 
@@ -172,7 +178,45 @@ class LevelOne(Room):
 class Room_2(Room):	
 	def __init__(self):
 		super().__init__()
-		self.next_state = "StartState"
+		self.next_state = "Win"
 
 	def set_enemies(self):	
 		self.enemy_sprites = pygame.sprite.Group([Hermit(), Hermit(), Hermit(), Hermit(), Hermit()])
+
+
+
+class Win(GameState): 
+	
+	def __init__(self):
+		super().__init__()
+		self.win_screen = pygame.image.load("winscreen.gif").convert()
+		self.invincible = 0
+
+	def update(self):
+		self.screen.blit(self.win_screen, (0,0))
+		self.invincible += 1
+		pygame.display.update()
+
+
+	def handle_event(self, event):
+		super().handle_event(event)
+		if event.type == MOUSEBUTTONDOWN and self.invincible > 100:
+			win_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="StartState")
+			pygame.event.post(win_event)
+
+class Lose(GameState): 
+	
+	def __init__(self):
+		super().__init__()
+		self.lose_screen = pygame.image.load("losescreen.gif").convert()
+		self.invincible = 0	
+	def update(self):
+		self.screen.blit(self.lose_screen, (0,0))
+		self.invincible += 1
+		pygame.display.update()
+
+	def handle_event(self, event):
+		super().handle_event(event)
+		if event.type == MOUSEBUTTONDOWN and self.invincible > 100:
+			lose_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="StartState")
+			pygame.event.post(lose_event)
