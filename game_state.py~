@@ -44,7 +44,7 @@ class StartState(GameState):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN:
 			if self.button_rect.collidepoint(event.pos):
-				startgame_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="LevelOne")
+				startgame_event = pygame.event.Event(STATECHANGE, event_id="Room_1", new_state="Room_1")
 				pygame.event.post(startgame_event)
 
 class Room(GameState):	
@@ -166,7 +166,7 @@ class Room(GameState):
 
 
 
-class LevelOne(Room):
+class Room_1(Room):
 	
 	def __init__(self):
 		super().__init__()
@@ -178,12 +178,20 @@ class LevelOne(Room):
 class Room_2(Room):	
 	def __init__(self):
 		super().__init__()
-		self.next_state = "Win"
+		self.next_state = "Room_3"
 
 	def set_enemies(self):	
 		self.enemy_sprites = pygame.sprite.Group([Hermit(), Hermit(), Hermit(), Hermit(), Hermit()])
 
 
+class Room_3(Room):
+	
+	def __init__(self):
+		super().__init__()
+		self.next_state = "Win"	
+	
+	def set_enemies(self):
+		self.enemy_sprites = pygame.sprite.Group([Octopus()])
 
 class Win(GameState): 
 	
@@ -217,6 +225,6 @@ class Lose(GameState):
 
 	def handle_event(self, event):
 		super().handle_event(event)
-		if event.type == MOUSEBUTTONDOWN:
+		if event.type == MOUSEBUTTONDOWN and self.invincible > 100:
 			lose_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="StartState")
 			pygame.event.post(lose_event)

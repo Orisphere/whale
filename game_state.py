@@ -8,6 +8,7 @@ import sys
 from whale import Whale
 from jelly import Jelly
 from hermit import Hermit
+from crab import Crab
 
 #STATECHANGE is the first userevent of 9
 STATECHANGE = USEREVENT+0
@@ -44,7 +45,7 @@ class StartState(GameState):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN:
 			if self.button_rect.collidepoint(event.pos):
-				startgame_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="LevelOne")
+				startgame_event = pygame.event.Event(STATECHANGE, event_id="Room_1", new_state="Room_1")
 				pygame.event.post(startgame_event)
 
 class Room(GameState):	
@@ -166,7 +167,7 @@ class Room(GameState):
 
 
 
-class LevelOne(Room):
+class Room_1(Room):
 	
 	def __init__(self):
 		super().__init__()
@@ -178,12 +179,20 @@ class LevelOne(Room):
 class Room_2(Room):	
 	def __init__(self):
 		super().__init__()
-		self.next_state = "Win"
+		self.next_state = "Room_3"
 
 	def set_enemies(self):	
 		self.enemy_sprites = pygame.sprite.Group([Hermit(), Hermit(), Hermit(), Hermit(), Hermit()])
 
 
+class Room_3(Room):
+	
+	def __init__(self):
+		super().__init__()
+		self.next_state = "Win"	
+	
+	def set_enemies(self):
+		self.enemy_sprites = pygame.sprite.Group([Crab()])
 
 class Win(GameState): 
 	
