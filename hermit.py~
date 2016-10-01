@@ -20,16 +20,7 @@ class Hermit(Enemy):
 			self.speed[1] = -self.speed[1]
 		if self.rect.left < 0 or self.rect.right > 750:
 			self.speed[0] = -self.speed[0]
-			"""
-		if self.rect.top < 0 and self.rect.right > 750:
-			self.speed = choice([[0, 2], [-2,0]])
-		elif self.rect.top < 0 and self.rect.left < 0:
-			self.speed = choice([[0, 2], [2,0]])
-		elif self.rect.bottom > 500 and self.rect.right > 750:
-			self.speed = choice([[0, -2], [-2,0]])
-		elif self.rect.bottom > 500 and self.rect.left < 0:
-			self.speed = choice([[0, -2], [2, 0]])
-		"""
+		
 		elif self.counter >= 150:
 			speeds = [[0, 2], [0, -2], [2, 0], [-2, 0]]
 			if self.rect.bottom > 500 or self.rect.top < 0:

@@ -4,10 +4,12 @@ from random import choice
 
 class Hermit(Enemy):
 
-	def __init__(self):
+	def __init__(self, startingpos=[0, 0]):
 		Enemy.__init__(self)
 		self.image = pygame.image.load('hermit.gif').convert()
 		self.rect = self.image.get_rect()
+		self.rect.left += startingpos[0]
+		self.rect.top += startingpos[1]
 		self.speed = [2, 0] 
 		self.health = 100
 		self.counter = 0

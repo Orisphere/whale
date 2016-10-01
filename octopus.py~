@@ -12,7 +12,6 @@ class Octopus(Enemy):
 		self.counter = 0
 		self.health = 100
 		self.reverse = 1
-		print(self.rect.center)	
 	
 	def update(self):
 		self.move()
@@ -74,7 +73,6 @@ class Octopus(Enemy):
 			self.reverse = -self.reverse
 			self.counter = 0
 
-			print(self.rect.center)
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
 

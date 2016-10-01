@@ -1,7 +1,6 @@
 
 from enemy import Enemy
 import pygame
-import random
 
 class Jelly(Enemy):
 

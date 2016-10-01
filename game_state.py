@@ -189,7 +189,7 @@ class Room_3(Room):
 		super().__init__(whale)
 		self.next_state = "Win"	
 	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Crab(), Crab(), Crab()])
+		self.enemy_sprites = pygame.sprite.Group([Crab([250, 100]), Crab([500, 300]), Crab()])
 
 class Win(GameState): 
 	

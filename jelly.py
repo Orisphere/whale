@@ -4,10 +4,12 @@ import pygame
 
 class Jelly(Enemy):
 
-	def __init__(self):
+	def __init__(self, startingpos=[0, 0]):
 		Enemy.__init__(self)
 		self.image = pygame.image.load('jelly.gif').convert()
 		self.rect = self.image.get_rect()
+		self.rect.left += startingpos[0]
+		self.rect.top += startingpos[1]
 		self.speed = [1, 1] 
 		self.health = 100
 	
