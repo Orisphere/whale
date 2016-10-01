@@ -8,8 +8,8 @@ class Crab(Enemy):
 		Enemy.__init__(self)
 		self.image = pygame.image.load('crab.gif').convert()
 		self.rect = self.image.get_rect()
-		self.rect.top += startingpos[1]
 		self.rect.left += startingpos[0]
+		self.rect.top += startingpos[1]
 		self.speed = [2, 0] 
 		self.health = 100
 		self.counter = 0
