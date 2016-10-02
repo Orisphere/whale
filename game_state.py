@@ -181,7 +181,7 @@ class Room_1(Room):
 	
 	def __init__(self):
 		super().__init__(Whale())
-		self.next_state = "Room_2"	
+		self.next_state = "Room_2" #next_state should be the name of the class of the subsequent room	
 	def set_enemies(self):
 		self.enemy_sprites = pygame.sprite.Group([Sunfish()])
 

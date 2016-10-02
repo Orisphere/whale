@@ -7,7 +7,8 @@ class Projectile():
 		#pygame.sprite.DirtySprite.__init__(self)
 		self.damage = 10
 		self.speed = 10
-		self.image = pygame.image.load('Images\sardine.gif').convert()
+		image_path = os.path.join(os.path.realpath(''), 'Images', 'sardine.gif')
+		self.image = pygame.image.load(image_path).convert()
 
 	def fire(self, is_facing_right, init_coord_x, init_coord_y):
 		sprite = ProjectileSprite()
