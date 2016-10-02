@@ -1,3 +1,4 @@
+import os
 from enemy import Enemy
 import pygame
 import random
@@ -6,7 +7,8 @@ class Octopus(Enemy):
 
 	def __init__(self, startingpos=[0,0]):
 		Enemy.__init__(self)
-		self.image = pygame.image.load('octopus.gif').convert()
+		image_path = os.path.join(os.path.realpath('.'), 'Images', 'octopus.gif')
+		self.image = pygame.image.load(image_path).convert()
 		self.rect = self.image.get_rect()
 		self.rect.left += startingpos[0]
 		self.rect.top += startingpos[1]

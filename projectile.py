@@ -1,3 +1,4 @@
+import os
 import pygame
 
 # formerly child of pygame.sprite.DirtySprite
@@ -6,7 +7,7 @@ class Projectile():
 		#pygame.sprite.DirtySprite.__init__(self)
 		self.damage = 10
 		self.speed = 10
-		self.image = pygame.image.load('sardine.gif').convert()
+		self.image = pygame.image.load('Images\sardine.gif').convert()
 
 	def fire(self, is_facing_right, init_coord_x, init_coord_y):
 		sprite = ProjectileSprite()
@@ -48,7 +49,8 @@ class Sardine(Projectile):
 
 	def __init__(self):
 		super().__init__()
-		self.image = pygame.image.load('sardine.gif').convert()
+		image_path = os.path.join(os.path.realpath(''), 'Images', 'sardine.gif')
+		self.image = pygame.image.load(image_path).convert()
 		self.damage = 10
 		self.speed = 10
 
@@ -59,7 +61,8 @@ class Sushi(Projectile):
 
 	def __init__(self):
 		super().__init__()
-		self.image = pygame.image.load('sushi.gif').convert()
+		image_path = os.path.join(os.path.realpath(''), 'Images', 'sushi.gif')
+		self.image = pygame.image.load(image_path).convert()
 		self.damage = 15
 		self.speed = 20
 
@@ -70,6 +73,7 @@ class Dory(Projectile):
 
 	def __init__(self):
 		super().__init__()
-		self.image = pygame.image.load('dory.gif').convert()
+		image_path = os.path.join(os.path.realpath(''), 'Images', 'dory.gif')
+		self.image = pygame.image.load(image_path).convert()
 		self.damage = 50
 		self.speed = 5

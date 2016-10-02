@@ -1,14 +1,15 @@
 from abc import ABCMeta, abstractmethod
-from octopus import Octopus
 import os
-from projectile import Sushi, Sardine, Dory
 import pygame
 from pygame.locals import *
 import sys
+from projectile import Sushi, Sardine, Dory
 from whale import Whale
-from jelly import Jelly
-from hermit import Hermit
-from crab import Crab
+from Enemies.octopus import Octopus
+from Enemies.jelly import Jelly
+from Enemies.hermit import Hermit
+from Enemies.crab import Crab
+from Enemies.sunfish import Sunfish
 
 #STATECHANGE is the first userevent of 9
 STATECHANGE = USEREVENT+0
@@ -32,8 +33,13 @@ class StartState(GameState):
 	
 	def __init__(self):
 		super().__init__()
-		self.start_screen = pygame.image.load("startscreen.png").convert()
-		self.play_button = pygame.image.load("playbutton.png").convert()
+			
+		startscreen_path = os.path.join(os.path.realpath(''), 'Images', 'startscreen.png')
+		self.start_screen = pygame.image.load(startscreen_path).convert()
+			
+		button_path = os.path.join(os.path.realpath(''), 'Images', 'playbutton.png')
+		self.play_button = pygame.image.load(button_path).convert()
+		
 		self.button_rect = self.play_button.get_rect(center=(self.width/2, 3*self.height/4))
 	
 	def update(self):
@@ -54,8 +60,12 @@ class Room(GameState):
 	def __init__(self, whale):
 		super().__init__()
 		self.background = 210, 210, 210 
-		self.heart = pygame.image.load('heart.gif').convert()
-		self.halfheart = pygame.image.load('halfheart.gif').convert()
+		
+		heart_path = os.path.join(os.path.realpath(''), 'Images', 'heart.gif')
+		self.heart = pygame.image.load(heart_path).convert()
+	
+		halfheart_path = os.path.join(os.path.realpath(''), 'Images', 'halfheart.gif')
+		self.halfheart = pygame.image.load(halfheart_path).convert()
 		self.healthbar = pygame.sprite.Group()
 
 		self.whale = whale
@@ -173,7 +183,7 @@ class Room_1(Room):
 		super().__init__(Whale())
 		self.next_state = "Room_2"	
 	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Octopus(), Jelly()])
+		self.enemy_sprites = pygame.sprite.Group([Sunfish()])
 
 class Room_2(Room):	
 	def __init__(self, whale):
@@ -187,15 +197,32 @@ class Room_3(Room):
 	
 	def __init__(self, whale):
 		super().__init__(whale)
-		self.next_state = "Win"	
+		self.next_state = "Room_4"	
 	def set_enemies(self):
 		self.enemy_sprites = pygame.sprite.Group([Crab([250, 100]), Crab([500, 300]), Crab()])
+
+class Room_4(Room):
+	
+	def __init__(self, whale):
+		super().__init__(whale)
+		self.next_state = "Room_5"	
+	def set_enemies(self):
+		self.enemy_sprites = pygame.sprite.Group([Octopus()])
+
+class Room_5(Room):
+	
+	def __init__(self, whale):
+		super().__init__(whale)
+		self.next_state = "Win"	
+	def set_enemies(self):
+		self.enemy_sprites = pygame.sprite.Group([Jelly()])
 
 class Win(GameState): 
 	
 	def __init__(self):
 		super().__init__()
-		self.win_screen = pygame.image.load("winscreen.gif").convert()
+		winscreen_path = os.path.join(os.path.realpath(''), 'Images', 'winscreen.gif')
+		self.win_screen = pygame.image.load(winscreen_path).convert()
 		self.invincible = 0
 
 	def update(self):
@@ -215,7 +242,8 @@ class Lose(GameState):
 	
 	def __init__(self):
 		super().__init__()
-		self.lose_screen = pygame.image.load("losescreen.gif").convert()
+		losescreen_path = os.path.join(os.path.realpath(''), 'Images', 'losescreen.gif')
+		self.lose_screen = pygame.image.load(losescreen_path).convert()
 		self.invincible = 0	
 	def update(self):
 		self.screen.blit(self.lose_screen, (0,0))

@@ -1,11 +1,14 @@
+import os
 import pygame
 from projectile import Projectile, ProjectileSprite, Sardine, Sushi, Dory
 
 class Whale(pygame.sprite.DirtySprite):
 
 	def __init__(self):
-		super().__init__()
-		self.whale = pygame.image.load('whale.gif').convert()
+		super().__init__()	
+		whale_path = os.path.join(os.path.realpath(''), 'Images', 'whale.gif')
+		self.whale = pygame.image.load(whale_path).convert()
+	
 		self.image = self.whale
 		self.rect = self.image.get_rect()
 		self.spout_counter = 0
@@ -14,11 +17,18 @@ class Whale(pygame.sprite.DirtySprite):
 		self.facing_right = True
 		self.state = 'still'
 		self.spouting = False
-		self.health = 10
+		self.health = 20
 		self.invincible = 0
-		self.spout_0 = pygame.image.load('spout00.gif').convert()
-		self.spout_1 = pygame.image.load('spout0.gif').convert()
-		self.spout_2 = pygame.image.load('spout.gif').convert()
+			
+		spout0_path = os.path.join(os.path.realpath(''), 'Images', 'spout00.gif')
+		self.spout_0 = pygame.image.load(spout0_path).convert()
+		
+		spout1_path = os.path.join(os.path.realpath(''), 'Images', 'spout0.gif')
+		self.spout_1 = pygame.image.load(spout1_path).convert()
+		
+		spout2_path = os.path.join(os.path.realpath(''), 'Images', 'spout.gif')
+		self.spout_2 = pygame.image.load(spout2_path).convert()
+		
 		self.projectile = Sardine()
 
 	def update(self):

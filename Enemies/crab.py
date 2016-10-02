@@ -1,16 +1,19 @@
+import os
 from enemy import Enemy
 import pygame
 from random import choice
+from Images import *
 
 class Crab(Enemy):
 
 	def __init__(self, startingpos=[0, 0]):
 		Enemy.__init__(self)
-		self.image = pygame.image.load('crab.gif').convert()
+		image_path = os.path.join(os.path.realpath('.'), 'Images', 'crab.gif')
+		self.image = pygame.image.load(image_path).convert()
 		self.rect = self.image.get_rect()
 		self.rect.left += startingpos[0]
 		self.rect.top += startingpos[1]
-		self.speed = [2, 0] 
+		self.speed = [0, 2] 
 		self.health = 100
 		self.counter = 0
 
