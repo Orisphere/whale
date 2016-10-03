@@ -1,8 +1,0 @@
-*.py~
-*.pyc
-/__pycache__/*
-<<<<<<< HEAD
-/__pycache__
-=======
-**/__pycache__
->>>>>>> 7f68d4b41d24da147986bb2e800ade2b0ceef083
