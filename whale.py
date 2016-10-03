@@ -19,7 +19,15 @@ class Whale(pygame.sprite.DirtySprite):
 		self.spouting = False
 		self.health = 20
 		self.invincible = 0
-			
+		
+		print(self.rect.top)
+		print(self.rect.bottom)
+		#Shrink the rect for collision purposes
+		new_rect = pygame.Rect(585, 83, 110, 40)
+		self.rect = new_rect
+		print(self.rect.top)
+		print(self.rect.bottom)
+		
 		spout0_path = os.path.join(os.path.realpath(''), 'Images', 'spout00.gif')
 		self.spout_0 = pygame.image.load(spout0_path).convert()
 		
@@ -52,7 +60,7 @@ class Whale(pygame.sprite.DirtySprite):
 	def movedown(self):
 		self.speed[0] = 0
 		
-		if self.rect.bottom > 500:
+		if self.rect.bottom+35 > 500:
 			self.speed[1] = 0
 		else:
 			self.speed[1] = 1
@@ -64,7 +72,7 @@ class Whale(pygame.sprite.DirtySprite):
 	def moveup(self):
 		self.speed[0] = 0
 		
-		if self.rect.top < 0:
+		if self.rect.top-7 < 0:
 			self.speed[1] = 0
 		else:
 			self.speed[1] = -1
@@ -78,7 +86,7 @@ class Whale(pygame.sprite.DirtySprite):
 			self.image = pygame.transform.flip(self.image, True, False)
 			self.facing_right = True
 		
-		if self.rect.right > 750: 
+		if self.rect.right+5 > 750: 
 			self.speed[0] = 0
 		else:
 			self.speed[0] = 1
