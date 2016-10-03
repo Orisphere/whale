@@ -235,7 +235,7 @@ class Win(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN and self.invincible > 100:
-			win_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="StartState")
+			win_event = pygame.event.Event(STATECHANGE, event_id="StartOver", new_state="StartState")
 			pygame.event.post(win_event)
 
 class Lose(GameState): 
@@ -254,5 +254,5 @@ class Lose(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN and self.invincible > 100:
-			lose_event = pygame.event.Event(STATECHANGE, event_id="levelOne", new_state="StartState")
+			lose_event = pygame.event.Event(STATECHANGE, event_id="StartOver", new_state="StartState")
 			pygame.event.post(lose_event)
