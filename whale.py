@@ -20,10 +20,7 @@ class Whale(pygame.sprite.DirtySprite):
 		self.health = 20
 		self.invincible = 0
 		
-		print(self.rect)
-		#Shrink the rect for collision purposes
-		self.rect.inflate_ip(-10, -40)	
-		self.rect.move_ip(0, -35)
+		self.hitbox = pygame.Rect(self.rect.left+5, self.rect.top+33, self.rect.width-10, self.rect.height-40)
 
 		spout0_path = os.path.join(os.path.realpath(''), 'Images', 'spout00.gif')
 		self.spout_0 = pygame.image.load(spout0_path).convert()
@@ -57,24 +54,25 @@ class Whale(pygame.sprite.DirtySprite):
 	def movedown(self):
 		self.speed[0] = 0
 		
-		if self.rect.bottom+35 > 500:
+		if self.rect.bottom > 500:
 			self.speed[1] = 0
 		else:
 			self.speed[1] = 1
 		
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
-
+		self.hitbox = self.hitbox.move(self.speed)	
 	
 	def moveup(self):
 		self.speed[0] = 0
 		
-		if self.rect.top-7 < 0:
+		if self.rect.top < 0:
 			self.speed[1] = 0
 		else:
 			self.speed[1] = -1
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
+		self.hitbox = self.hitbox.move(self.speed)	
 
 	def moveright(self):
 		self.speed[1] = 0
@@ -83,13 +81,14 @@ class Whale(pygame.sprite.DirtySprite):
 			self.image = pygame.transform.flip(self.image, True, False)
 			self.facing_right = True
 		
-		if self.rect.right+5 > 750: 
+		if self.rect.right > 750: 
 			self.speed[0] = 0
 		else:
 			self.speed[0] = 1
 			
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
+		self.hitbox = self.hitbox.move(self.speed)	
 	
 	def moveleft(self):
 		self.speed[1] = 0
@@ -106,7 +105,8 @@ class Whale(pygame.sprite.DirtySprite):
 
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
-	
+		self.hitbox = self.hitbox.move(self.speed)	
+
 	def spout(self):
 
 		if self.spout_counter == 1:
