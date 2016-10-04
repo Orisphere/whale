@@ -163,7 +163,10 @@ class Room(GameState):
 		self.calc_dmg()
 		self.update_healthbar()
 		self.is_cleared()
-
+		
+		#Debugging code for rects
+		pygame.draw.rect(self.screen, (125, 65, 190), self.whale.rect, 1)
+		
 		if self.cleared: 
 			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state=self.next_state)
 			pygame.event.post(playerwon_event)

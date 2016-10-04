@@ -20,14 +20,11 @@ class Whale(pygame.sprite.DirtySprite):
 		self.health = 20
 		self.invincible = 0
 		
-		print(self.rect.top)
-		print(self.rect.bottom)
+		print(self.rect)
 		#Shrink the rect for collision purposes
-		new_rect = pygame.Rect(585, 83, 110, 40)
-		self.rect = new_rect
-		print(self.rect.top)
-		print(self.rect.bottom)
-		
+		self.rect.inflate_ip(-10, -40)	
+		self.rect.move_ip(0, -35)
+
 		spout0_path = os.path.join(os.path.realpath(''), 'Images', 'spout00.gif')
 		self.spout_0 = pygame.image.load(spout0_path).convert()
 		
