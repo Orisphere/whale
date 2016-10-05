@@ -16,13 +16,17 @@ class Projectile():
 		sprite.rect = sprite.image.get_rect()
 		sprite.rect.top = init_coord_y
 		sprite.damage = self.damage
+		sprite.hitbox = pygame.Rect(sprite.rect)
+		
 		if is_facing_right:
 			sprite.speed = [self.speed, 0]
 			sprite.rect.right = init_coord_x
+			sprite.hitbox.right = init_coord_x
 		else:
 			sprite.image = pygame.transform.flip(sprite.image, True, False)
 			sprite.speed = [-self.speed, 0]
 			sprite.rect.left = init_coord_x
+			sprite.hitbox.left = init_coord_x
 		return sprite
 
 class ProjectileSprite(pygame.sprite.DirtySprite):
@@ -42,6 +46,7 @@ class ProjectileSprite(pygame.sprite.DirtySprite):
 		else:
 			new_pos = self.rect.move(self.speed)
 			self.rect = new_pos
+			self.hitbox = self.hitbox.move(self.speed)
 
 #, is_facing_right, init_coord_x, init_coord_y
 class Sardine(Projectile):
