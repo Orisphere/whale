@@ -87,17 +87,18 @@ class Room(GameState):
 	def calc_dmg(self):
 		player_projectiles = self.player_projectiles
 		enemies = self.enemy_sprites
+		#TODO: convert to use hitboxes
 		enemy_hit = pygame.sprite.groupcollide(enemies, player_projectiles, False, True) 
-		
+			
 		for enemy in enemy_hit.keys():
 			for projectile in enemy_hit[enemy]:
 				enemy.health -= projectile.damage
 				if enemy.health <= 0:
 					enemy.kill()
-
-		whale_collide = pygame.sprite.spritecollideany(self.whale, self.enemy_sprites)	
 		
-		if whale_collide:
+		enemy_hitboxes = [enemy.hitbox for enemy in self.enemy_sprites]
+		whale_collide = self.whale.hitbox.collidelist(enemy_hitboxes)
+		if whale_collide != -1:
 			if not self.whale.invincible:
 				self.whale.invincible = 50
 				self.whale.health -= 1
