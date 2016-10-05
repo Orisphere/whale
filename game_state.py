@@ -87,14 +87,14 @@ class Room(GameState):
 	def calc_dmg(self):
 		player_projectiles = self.player_projectiles
 		enemies = self.enemy_sprites
-		#TODO: convert to use hitboxes
-		enemy_hit = pygame.sprite.groupcollide(enemies, player_projectiles, False, True) 
 			
-		for enemy in enemy_hit.keys():
-			for projectile in enemy_hit[enemy]:
-				enemy.health -= projectile.damage
-				if enemy.health <= 0:
-					enemy.kill()
+		for enemy in enemies:
+			for projectile in player_projectiles:
+				if projectile.hitbox.colliderect(enemy.hitbox):
+					enemy.health -= projectile.damage
+					if enemy.health <= 0:
+						enemy.kill()
+					projectile.kill()
 		
 		enemy_hitboxes = [enemy.hitbox for enemy in self.enemy_sprites]
 		whale_collide = self.whale.hitbox.collidelist(enemy_hitboxes)
@@ -167,6 +167,10 @@ class Room(GameState):
 		
 		#Debugging code for rects
 		pygame.draw.rect(self.screen, (125, 65, 190), self.whale.hitbox, 1)
+		
+		for projectile in self.player_projectiles:
+			pygame.draw.rect(self.screen, (125, 65, 190), projectile.hitbox, 1)	
+		
 		for sprite in self.enemy_sprites.sprites():
 			pygame.draw.rect(self.screen, (125, 65, 190), sprite.hitbox, 1)	
 		
