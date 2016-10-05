@@ -16,7 +16,8 @@ class Octopus(Enemy):
 		self.counter = 0
 		self.health = 100
 		self.reverse = 1
-	
+		self.hitbox = self.rect
+
 	def update(self):
 		self.move()
 		self.counter += 1
@@ -79,6 +80,7 @@ class Octopus(Enemy):
 
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
-
+		self.hitbox = self.hitbox.move(self.speed)
+	
 	def shoot(self):
 		pass

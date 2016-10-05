@@ -95,7 +95,7 @@ class Room(GameState):
 				if enemy.health <= 0:
 					enemy.kill()
 
-		whale_collide = pygame.sprite.spritecollideany(self.whale, self.enemy_sprites, False)	
+		whale_collide = pygame.sprite.spritecollideany(self.whale, self.enemy_sprites)	
 		
 		if whale_collide:
 			if not self.whale.invincible:
@@ -166,6 +166,8 @@ class Room(GameState):
 		
 		#Debugging code for rects
 		pygame.draw.rect(self.screen, (125, 65, 190), self.whale.hitbox, 1)
+		for sprite in self.enemy_sprites.sprites():
+			pygame.draw.rect(self.screen, (125, 65, 190), sprite.hitbox, 1)	
 		
 		if self.cleared: 
 			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state=self.next_state)

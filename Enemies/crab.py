@@ -16,6 +16,7 @@ class Crab(Enemy):
 		self.speed = [0, 2] 
 		self.health = 100
 		self.counter = 0
+		self.hitbox = self.rect
 
 	def update(self):
 		self.move()
@@ -38,3 +39,4 @@ class Crab(Enemy):
 			self.counter = 0
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
+		self.hitbox = self.hitbox.move(self.speed)

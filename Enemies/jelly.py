@@ -13,7 +13,8 @@ class Jelly(Enemy):
 		self.rect.top += startingpos[1]
 		self.speed = [1, 1] 
 		self.health = 100
-	
+		self.hitbox = self.rect
+
 	def update(self):
 		self.move()
 	
@@ -26,6 +27,7 @@ class Jelly(Enemy):
 
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
+		self.hitbox = self.hitbox.move(self.speed)
 
 	def shoot(self):
 		pass

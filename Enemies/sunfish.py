@@ -15,6 +15,7 @@ class Sunfish(Enemy):
 		self.speed = [2, 0] 
 		self.health = 100
 		self.counter = 0
+		self.hitbox = self.rect
 
 	def update(self):
 		self.move()
@@ -37,3 +38,4 @@ class Sunfish(Enemy):
 			self.counter = 0
 		new_pos = self.rect.move(self.speed)
 		self.rect = new_pos
+		self.hitbox = self.hitbox.move(self.speed)
