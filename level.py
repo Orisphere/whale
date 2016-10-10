@@ -1,7 +1,7 @@
 from game_state import GameState
 import random 
 
-class Level(Object):
+class Level:
 
 	def __init__(self):
 		self.generate_rooms()
@@ -11,4 +11,7 @@ class Level(Object):
 
 	
 	def generate_rooms(self):	
-		self.rooms = ['StartState', 'Room_1', 'Room_2', 'Room_3', 'Room_4', 'Room_5','Win'] 
+		self.rooms = ['Room_1', 'Room_2', 'Room_3', 'Room_4', 'Room_5']
+		random.shuffle(self.rooms)
+		self.rooms.append('Win')
+	

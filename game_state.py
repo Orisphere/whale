@@ -189,14 +189,18 @@ class Room(GameState):
 
 class Room_1(Room):
 	
-	def __init__(self):
-		super().__init__(Whale())
+	def __init__(self, whale=None):
+		if whale == None:
+			whale = Whale()
+		super().__init__(whale)
 		self.next_state = "Room_2" #next_state should be the name of the class of the subsequent room	
 	def set_enemies(self):
 		self.enemy_sprites = pygame.sprite.Group([Sunfish()])
 
 class Room_2(Room):	
-	def __init__(self, whale):
+	def __init__(self, whale=None):
+		if whale == None:
+			whale = Whale()
 		super().__init__(whale)
 		self.next_state = "Room_3"
 	def set_enemies(self):	
@@ -204,24 +208,27 @@ class Room_2(Room):
 
 
 class Room_3(Room):
-	
-	def __init__(self, whale):
+	def __init__(self, whale=None):
+		if whale == None:
+			whale = Whale()
 		super().__init__(whale)
 		self.next_state = "Room_4"	
 	def set_enemies(self):
 		self.enemy_sprites = pygame.sprite.Group([Crab([250, 100]), Crab([500, 300]), Crab()])
 
 class Room_4(Room):
-	
-	def __init__(self, whale):
+	def __init__(self, whale=None):
+		if whale == None:
+			whale = Whale()
 		super().__init__(whale)
 		self.next_state = "Room_5"	
 	def set_enemies(self):
 		self.enemy_sprites = pygame.sprite.Group([Octopus()])
 
 class Room_5(Room):
-	
-	def __init__(self, whale):
+	def __init__(self, whale=None):
+		if whale == None:
+			whale = Whale()
 		super().__init__(whale)
 		self.next_state = "Win"	
 	def set_enemies(self):
