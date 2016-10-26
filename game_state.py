@@ -55,9 +55,8 @@ class StartState(GameState):
 				pygame.event.post(startgame_event)
 
 class Room(GameState):	
-	__metaclass__ = ABCMeta
 
-	def __init__(self, whale):
+	def __init__(self, whale=None, enemies=[]):
 		super().__init__()
 		self.background = 210, 210, 210 
 		
@@ -67,9 +66,13 @@ class Room(GameState):
 		halfheart_path = os.path.join(os.path.realpath(''), 'Images', 'halfheart.gif')
 		self.halfheart = pygame.image.load(halfheart_path).convert()
 		self.healthbar = pygame.sprite.Group()
-
-		self.whale = whale
-		self.set_enemies()
+		
+		if whale == None:
+			self.whale = Whale()
+		else:
+			self.whale = whale
+		
+		self.set_enemies(enemies)
 		self.whale_is_dead = False
 		
 		self.player_projectiles = pygame.sprite.Group()
@@ -80,10 +83,9 @@ class Room(GameState):
 		self.update_healthbar()
 		self.next_state = "LevelOne"
 	
-	@abstractmethod
-	def set_enemies(self):
-		...
-	
+	def set_enemies(self, enemies):
+		self.enemy_sprites = pygame.sprite.Group(enemies)
+
 	def calc_dmg(self):
 		player_projectiles = self.player_projectiles
 		enemies = self.enemy_sprites
@@ -114,17 +116,6 @@ class Room(GameState):
 		if self.whale.health%2 == 1:
 			self.screen.blit(self.halfheart, pos)
 
-	def shoot(self):
-		self.whale.spouting = True
-		if self.whale.facing_right:
-			launch_location = self.whale.rect.right
-		else:
-			launch_location = self.whale.rect.left
-		bullet = self.whale.projectile.fire(self.whale.facing_right, launch_location, (self.whale.rect.top+(self.whale.rect.height/2)))
-		bullet_sprite = pygame.sprite.Group(bullet)
-		self.player_projectiles.add(bullet_sprite)
-		self.sprites.add(bullet_sprite)
-	
 	def handle_event(self, event):
 			super().handle_event(event)
 
@@ -149,7 +140,9 @@ class Room(GameState):
 					self.whale.state = 'still'
 
 			elif event.type == MOUSEBUTTONDOWN:
-				self.shoot()
+				bullet_sprite = self.whale.shoot()
+				self.player_projectiles.add(bullet_sprite)
+				self.sprites.add(bullet_sprite)
 				
 	def is_cleared(self):
 		
@@ -174,65 +167,18 @@ class Room(GameState):
 		for sprite in self.enemy_sprites.sprites():
 			pygame.draw.rect(self.screen, (125, 65, 190), sprite.hitbox, 1)	
 		
-		if self.cleared: 
-			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state=self.next_state)
-			pygame.event.post(playerwon_event)
-		
-	
 		if self.whale_is_dead: 
 			playerlose_event = pygame.event.Event(STATECHANGE, event_id="lose", new_state="Lose")
 			pygame.event.post(playerlose_event)
+	
+		elif self.cleared: 
+			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state=self.next_state)
+			pygame.event.post(playerwon_event)
+		
 		
 		pygame.display.update()
 
 
-
-class Room_1(Room):
-	
-	def __init__(self, whale=None):
-		if whale == None:
-			whale = Whale()
-		super().__init__(whale)
-		self.next_state = "Room_2" #next_state should be the name of the class of the subsequent room	
-	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Sunfish()])
-
-class Room_2(Room):	
-	def __init__(self, whale=None):
-		if whale == None:
-			whale = Whale()
-		super().__init__(whale)
-		self.next_state = "Room_3"
-	def set_enemies(self):	
-		self.enemy_sprites = pygame.sprite.Group([Hermit(), Hermit(), Hermit(), Hermit(), Hermit()])
-
-
-class Room_3(Room):
-	def __init__(self, whale=None):
-		if whale == None:
-			whale = Whale()
-		super().__init__(whale)
-		self.next_state = "Room_4"	
-	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Crab([250, 100]), Crab([500, 300]), Crab()])
-
-class Room_4(Room):
-	def __init__(self, whale=None):
-		if whale == None:
-			whale = Whale()
-		super().__init__(whale)
-		self.next_state = "Room_5"	
-	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Octopus()])
-
-class Room_5(Room):
-	def __init__(self, whale=None):
-		if whale == None:
-			whale = Whale()
-		super().__init__(whale)
-		self.next_state = "Win"	
-	def set_enemies(self):
-		self.enemy_sprites = pygame.sprite.Group([Jelly()])
 
 class Win(GameState): 
 	

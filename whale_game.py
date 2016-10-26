@@ -5,9 +5,9 @@ from game_state import *
 from level import Level
 def run_game():
 	
-	
 	state = StartState() 
 	level = Level()
+	
 	while 1:
 		for event in pygame.event.get():
 			if event.type == STATECHANGE:
