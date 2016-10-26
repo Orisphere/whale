@@ -6,18 +6,24 @@ from level import Level
 def run_game():
 	
 	state = StartState() 
-	level = Level()
-	
+	level = Level()	
+
 	while 1:
 		for event in pygame.event.get():
 			if event.type == STATECHANGE:
-				room = level.next_room()
-				try:
-					whale = state.whale
-					state = eval(room)(whale)
-				except:
-					state = eval(room)()
-			
+				if event.event_id == 'won':
+					next_room = level.next_room()
+					
+					if next_room == 'Win':
+						state = Win()
+					else:
+						state = Room(state.whale, enemies=level.enemies[next_room])
+
+				elif event.event_id == 'lose':
+					state = Lose()	
+				
+				elif event.event_id == 'start_over':
+					state = StartState()
 			else:
 				state.handle_event(event)
 		state.update()

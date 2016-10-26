@@ -136,6 +136,6 @@ class Whale(pygame.sprite.DirtySprite):
 			launch_location = self.rect.right
 		else:
 			launch_location = self.rect.left
-		bullet = self.whale.projectile.fire(self.facing_right, launch_location, (self.rect.top+(self.rect.height/2)))
+		bullet = self.projectile.fire(self.facing_right, launch_location, (self.rect.top+(self.rect.height/2)))
 		bullet_sprite = pygame.sprite.Group(bullet)
 		return bullet_sprite	

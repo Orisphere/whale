@@ -33,7 +33,7 @@ class StartState(GameState):
 	
 	def __init__(self):
 		super().__init__()
-			
+		self.whale = Whale()			
 		startscreen_path = os.path.join(os.path.realpath(''), 'Images', 'startscreen.png')
 		self.start_screen = pygame.image.load(startscreen_path).convert()
 			
@@ -63,11 +63,11 @@ class StartState(GameState):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN:
 			if self.button_rect.collidepoint(event.pos):
-				startgame_event = pygame.event.Event(STATECHANGE, event_id="Room_1", new_state="Room_1")
+				startgame_event = pygame.event.Event(STATECHANGE, event_id="won", new_state="Room_1")
 				pygame.event.post(startgame_event)
 class Room(GameState):	
-
-	def __init__(self, whale=None, enemies=[]):
+	
+	def __init__(self, whale=None, enemies=None):
 		super().__init__()
 		self.background = 210, 210, 210 
 		
@@ -83,6 +83,9 @@ class Room(GameState):
 		else:
 			self.whale = whale
 		
+		if enemies == None:
+			enemies = [Octopus()]
+		
 		self.set_enemies(enemies)
 		self.whale_is_dead = False
 		
@@ -96,7 +99,7 @@ class Room(GameState):
 	
 	def set_enemies(self, enemies):
 		self.enemy_sprites = pygame.sprite.Group(enemies)
-
+	
 	def calc_dmg(self):
 		player_projectiles = self.player_projectiles
 		enemies = self.enemy_sprites
@@ -157,7 +160,6 @@ class Room(GameState):
 				self.sprites.add(bullet_sprite)
 				
 	def is_cleared(self):
-		
 		if self.enemy_sprites.sprites() == []:
 			self.cleared = True
 
@@ -171,19 +173,21 @@ class Room(GameState):
 		self.is_cleared()
 		
 		#Debugging code for rects
-		pygame.draw.rect(self.screen, (125, 65, 190), self.whale.hitbox, 1)
+		"""pygame.draw.rect(self.screen, (125, 65, 190), self.whale.hitbox, 1)
 		
 		for projectile in self.player_projectiles:
 			pygame.draw.rect(self.screen, (125, 65, 190), projectile.hitbox, 1)	
 		
 		for sprite in self.enemy_sprites.sprites():
 			pygame.draw.rect(self.screen, (125, 65, 190), sprite.hitbox, 1)	
+		"""
 		
 		if self.whale_is_dead: 
 			playerlose_event = pygame.event.Event(STATECHANGE, event_id="lose", new_state="Lose")
 			pygame.event.post(playerlose_event)
 	
 		elif self.cleared: 
+			#print("Cleared")
 			playerwon_event = pygame.event.Event(STATECHANGE, event_id="won", new_state=self.next_state)
 			pygame.event.post(playerwon_event)
 		
@@ -210,7 +214,7 @@ class Win(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN and self.invincible > 100:
-			win_event = pygame.event.Event(STATECHANGE, event_id="StartOver", new_state="StartState")
+			win_event = pygame.event.Event(STATECHANGE, event_id="start_over", new_state="StartState")
 			pygame.event.post(win_event)
 
 class Lose(GameState): 
@@ -220,6 +224,7 @@ class Lose(GameState):
 		losescreen_path = os.path.join(os.path.realpath(''), 'Images', 'losescreen.gif')
 		self.lose_screen = pygame.image.load(losescreen_path).convert()
 		self.invincible = 0	
+	
 	def update(self):
 		self.screen.blit(self.lose_screen, (0,0))
 		if self.invincible <= 100:
@@ -229,5 +234,5 @@ class Lose(GameState):
 	def handle_event(self, event):
 		super().handle_event(event)
 		if event.type == MOUSEBUTTONDOWN and self.invincible > 100:
-			lose_event = pygame.event.Event(STATECHANGE, event_id="StartOver", new_state="StartState")
+			lose_event = pygame.event.Event(STATECHANGE, event_id="start_over", new_state="StartState")
 			pygame.event.post(lose_event)
