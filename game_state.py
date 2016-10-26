@@ -39,12 +39,24 @@ class StartState(GameState):
 			
 		button_path = os.path.join(os.path.realpath(''), 'Images', 'playbutton.png')
 		self.play_button = pygame.image.load(button_path).convert()
-		
+				
+		pressed_path = os.path.join(os.path.realpath(''), 'Images', 'pressedbutton.png')
+		self.pressed_button = pygame.image.load(pressed_path).convert()
+	
 		self.button_rect = self.play_button.get_rect(center=(self.width/2, 3*self.height/4))
+		
+		self.button = self.play_button
 	
 	def update(self):
 		self.screen.blit(self.start_screen, (0,0))
-		self.screen.blit(self.play_button, self.button_rect.topleft)
+		mouse_pos = pygame.mouse.get_pos()
+		
+		if self.button_rect.collidepoint(mouse_pos):
+			self.button = self.pressed_button
+		else:
+			self.button = self.play_button
+		
+		self.screen.blit(self.button, self.button_rect.topleft)
 		pygame.display.update()
 
 	def handle_event(self, event):
@@ -53,7 +65,6 @@ class StartState(GameState):
 			if self.button_rect.collidepoint(event.pos):
 				startgame_event = pygame.event.Event(STATECHANGE, event_id="Room_1", new_state="Room_1")
 				pygame.event.post(startgame_event)
-
 class Room(GameState):	
 
 	def __init__(self, whale=None, enemies=[]):
@@ -100,6 +111,7 @@ class Room(GameState):
 		
 		enemy_hitboxes = [enemy.hitbox for enemy in self.enemy_sprites]
 		whale_collide = self.whale.hitbox.collidelist(enemy_hitboxes)
+		
 		if whale_collide != -1:
 			if not self.whale.invincible:
 				self.whale.invincible = 50
