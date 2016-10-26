@@ -23,6 +23,7 @@ def run_game():
 					state = Lose()	
 				
 				elif event.event_id == 'start_over':
+					level = Level()
 					state = StartState()
 			else:
 				state.handle_event(event)
